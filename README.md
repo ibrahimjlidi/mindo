@@ -4,7 +4,7 @@ Boutique en ligne statique pour Mindo, avec catalogue de produits, panier et com
 
 ## Utilisation
 
-Ouvrez `index.html` dans un navigateur. La page `contact.html` donne accès à WhatsApp et à Facebook. Le point jaune du logo ouvre le tableau dans `tableau.html`, avec une invite de mot de passe côté navigateur.
+Ouvrez `index.html` dans un navigateur. La page `contact.html` donne accès à WhatsApp et à Facebook. Le point jaune du logo ouvre le tableau dans `tableau.html`, avec une invite de mot de passe côté navigateur et un bouton de langue français / arabe tunisien.
 
 ## Déploiement sur Vercel
 

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Tableau des produits – Mindo</title>
-<meta name="description" content="Tableau de gestion interne Mindo.">
+<meta id="page-description" name="description" content="Tableau de gestion interne Mindo.">
 <meta name="theme-color" content="#142b4d">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@400;600;700;800&display=swap">
 <style>
@@ -15,12 +15,14 @@ body{min-height:100vh;margin:0;background:var(--bg);color:var(--ink);font-family
 a{color:inherit}
 :focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 header{background:var(--card);border-bottom:1px solid var(--line)}
-.bar{max-width:1120px;min-height:68px;margin:auto;padding:10px 24px;display:flex;align-items:center;gap:24px}
+.bar{max-width:1120px;min-height:68px;margin:auto;padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:24px}
 .brand-group{display:inline-flex;align-items:center;white-space:nowrap}
 .logo{font-family:"Bricolage Grotesque",sans-serif;font-size:1.75rem;font-weight:800;letter-spacing:-.06em;text-decoration:none}
 .logo-dot{width:18px;height:22px;margin-left:1px;display:grid;place-items:center}
 .logo-dot i{display:block;width:9px;height:9px;border-radius:50%;background:var(--gold);transition:transform .18s ease,box-shadow .18s ease}
 .logo-dot:hover i{transform:scale(1.35);box-shadow:0 0 0 5px rgba(255,195,77,.24)}
+.lang-toggle{padding:9px 14px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);font:inherit;font-size:.86rem;font-weight:800;text-decoration:none}
+.lang-toggle:hover{border-color:var(--brand);color:var(--brand)}
 .nav{margin-left:auto;display:flex;gap:20px;font-size:.9rem;font-weight:700}
 .nav a{text-decoration:none}
 .nav a:hover{color:var(--brand)}
@@ -60,6 +62,9 @@ thead{background:var(--navy);color:#fff}
 th,td{padding:14px 18px}
 th{font-size:.78rem;letter-spacing:.04em}
 td{border-bottom:1px solid var(--line);font-size:.9rem}
+html[dir="rtl"] table{text-align:right}
+html[dir="rtl"] td:last-child,html[dir="rtl"] th:last-child{text-align:left}
+html[dir="rtl"] .price,html[dir="rtl"] tfoot td{direction:ltr}
 tbody tr:last-child td{border-bottom:0}
 tbody tr:hover{background:color-mix(in srgb,var(--brand) 6%,var(--card))}
 td:last-child,th:last-child{text-align:right;white-space:nowrap}
@@ -80,13 +85,14 @@ footer{padding:17px 24px;border-top:1px solid var(--line);color:var(--mute);text
 <header>
   <div class="bar">
     <span class="brand-group"><a class="logo" href="index.html" aria-label="Mindo, boutique">Mindo</a></span>
+    <a class="lang-toggle" id="language-toggle" href="?lang=ar" lang="ar">العربية</a>
   </div>
 </header>
 <main hidden>
   <span class="eyebrow">Tableau · invite d’accès</span>
   <h1>Tableau de gestion Mindo</h1>
   <p class="intro">Les six feuilles du classeur, avec leurs produits, hypothèses, budgets, fournisseurs, plan de lancement et indicateurs.</p>
-  <p class="public-notice"><strong>À savoir :</strong> cette fenêtre est une simple invite visuelle. Les données restent dans le code public du site et ne sont pas réellement protégées.</p>
+  <p class="public-notice"><strong id="public-notice-title">À savoir :</strong> <span id="public-notice-text">cette fenêtre est une simple invite visuelle. Les données restent dans le code public du site et ne sont pas réellement protégées.</span></p>
   <div class="sheet-tabs" id="sheet-tabs" role="tablist" aria-label="Feuilles du classeur"></div>
   <section id="sheet-content" role="tabpanel" tabindex="0" aria-live="polite"></section>
 </main>
@@ -204,6 +210,271 @@ var SHEETS=[
   ],notes:["Saisissez les colonnes bleues ; la ligne du 10 nov. 2026 est un EXEMPLE (à écraser). Objectifs : confirmation > 75 %, livraison > 80 %."]
   }
 ];
+var ARABIC=new URLSearchParams(window.location.search).get("lang")==="ar";
+var AR={
+  "Mindo, boutique":"متجر Mindo",
+  "العربية":"العربية",
+  "Français":"Français",
+  "Tableau · invite d’accès":"لوحة التصرّف · الدخول",
+  "Tableau de gestion Mindo":"لوحة تسيير Mindo",
+  "Les six feuilles du classeur, avec leurs produits, hypothèses, budgets, fournisseurs, plan de lancement et indicateurs.":"الستّة جداول متاع ملفّك: المنتجات، الفرضيّات، الميزانيّة، المزوّدين، خطّة الانطلاق والمؤشّرات.",
+  "À savoir : cette fenêtre est une simple invite visuelle. Les données restent dans le code public du site et ne sont pas réellement protégées.":"معلومة: هاذي كان نافذة كلمة سرّ شكلية. البيانات وكلمة السرّ موجودين في كود الموقع وينجّم أيّ شخص يطّلع عليهم؛ موش حماية حقيقية.",
+  "Retour à la boutique":"ارجع للمتجر",
+  "Espace de gestion":"فضاء التسيير",
+  "Mot de passe requis":"كلمة السرّ مطلوبة",
+  "Saisissez le mot de passe pour afficher le tableau Mindo.":"اكتب كلمة السرّ باش تشوف لوحة Mindo.",
+  "Mot de passe":"كلمة السرّ",
+  "Ouvrir le tableau":"افتح اللوحة",
+  "Hypothèses":"الفرضيّات",
+  "Produits":"المنتجات",
+  "Budget":"الميزانيّة",
+  "Fournisseurs":"المزوّدين",
+  "Plan de lancement":"خطّة الانطلاق",
+  "Suivi KPI":"متابعة المؤشّرات",
+  "Hypothèses de coûts et objectifs utilisés par les autres feuilles.":"تقديرات المصاريف والأهداف اللي تعتمد عليهم بقيّة الجداول.",
+  "Prix, marges, rentabilité estimée, priorité et quantité d'achat proposée.":"أسعار الشراء والبيع، الربح المتوقّع، الأولويّة والكمّية المقترحة للشراء.",
+  "Deux scénarios de lancement et contrôle du budget de stock.":"زوز خطط للانطلاق ومراقبة ميزانيّة السلعة.",
+  "Pistes de recherche non vérifiées et suivi à compléter lors des démarches.":"بلايص وطرق للبحث على المزوّدين؛ المعلومات موش مؤكّدة وتتكمّل وقت التواصل.",
+  "Plan de lancement sur 4 semaines, daté à partir du 3 novembre 2026.":"برنامج انطلاق على 4 أسابيع، يبدأ من 3 نوفمبر 2026.",
+  "Suivi quotidien des indicateurs. La ligne d'exemple est à écraser.":"متابعة يوميّة للمؤشّرات. السطر الموجود مجرّد مثال وتنجم تبدّلو.",
+  "Paramètre":"المتغيّر",
+  "Valeur":"القيمة",
+  "Source / explication":"المصدر / التفسير",
+  "Frais de livraison (DT)":"مصاريف التوصيل (د.ت)",
+  "Estimation du tarif transporteur (~7 DT). Payé par le client, mais perdu en cas de refus.":"تقدير لتعريفة شركة التوصيل (حوالي 7 د.ت). يخلّصهم الحريف، أمّا يضيعوا كان يرفض الطلب.",
+  "Emballage par commande (DT)":"التغليف لكلّ طلب (د.ت)",
+  "Estimation (sachet, carton, étiquette).":"تقدير (كيس، علبة، ولاصقة).",
+  "Taux de refus COD":"نسبة رفض الدفع عند التسليم",
+  "Milieu de la fourchette 15–25 % indiquée dans le plan. À remplacer par vos chiffres réels.":"نسبة وسطية بين 15 و25٪ المذكورة في الخطّة. بدّلها بأرقامك الحقيقيّة.",
+  "Coût de retour en cas de refus (DT)":"مصاريف الإرجاع كان الحريف يرفض (د.ت)",
+  "Hypothèse : on perd les frais de livraison aller-retour (marchandise récupérée et revendable).":"تقدير: مصاريف التوصيل ذهاب وإياب تضيع (والسلعة ترجع وتنجم تتباع من جديد).",
+  "Coût pub cible par commande (DT)":"كلفة الإشهار المستهدفة لكلّ طلب (د.ت)",
+  "Milieu de la cible 8–12 DT du plan.":"تقدير في وسط الهدف المذكور في الخطّة: بين 8 و12 د.ت.",
+  "Règle d'arrêt : CPA max en % du prix de vente":"قاعدة إيقاف الإعلان: أقصى كلفة للبيع كنسبة من سعر البيع",
+  "Arrêter un produit si le coût par vente dépasse 40 % du prix après ~20 DT dépensés.":"وقّف الإعلان على السلعة كان كلفة البيع تفوت 40٪ من سعرها بعد ما تصرف تقريبًا 20 د.ت.",
+  "Dépense test minimale avant décision (DT)":"أقلّ مصروف اختبار قبل القرار (د.ت)",
+  "Règle du plan (semaine 3).":"حسب قاعدة الخطّة (الأسبوع الثالث).",
+  "Taux de confirmation visé":"نسبة تأكيد الطلبات المستهدفة",
+  "Objectif du plan (> 75 %).":"هدف الخطّة: أكثر من 75٪.",
+  "Taux de livraison visé":"نسبة الطلبات اللي توصل للحريف المستهدفة",
+  "Objectif du plan (> 80 %).":"هدف الخطّة: أكثر من 80٪.",
+  "Cellules en bleu sur fond jaune = à modifier. Toutes les autres feuilles se recalculent automatiquement.":"الخانات الزرقاء على خلفيّة صفراء تنجم تبدّلهم. بقيّة الجداول تتحسب وحدها.",
+  "Avertissement : tous les prix sont des estimations de fourchettes de gros en Tunisie, pas des devis réels. Confirmez en personne avant tout achat.":"تنبيه: الأسعار تقديريّة وماهيش عروض أسعار حقيقيّة. تثبّت من الأسعار عند المزوّد قبل ما تشري.",
+  "#":"رقم",
+  "Produit":"المنتج",
+  "Catégorie":"الصنف",
+  "Prix de gros (DT)":"سعر الشراء بالجملة (د.ت)",
+  "Prix de vente (DT)":"سعر البيع (د.ت)",
+  "Marge brute (DT)":"الربح الخام (د.ت)",
+  "Marge brute (%)":"نسبة الربح الخام",
+  "Profit/commande livrée, avant refus (DT)":"الربح على الطلب اللي وصل، قبل احتساب الرفض (د.ت)",
+  "Profit espéré/commande passée, après refus (DT)":"الربح المتوقّع لكلّ طلب بعد احتساب الرفض (د.ت)",
+  "CPA max rentable (DT)":"أقصى كلفة إشهار مربحة (د.ت)",
+  "CPA max règle 40 % (DT)":"أقصى كلفة إشهار حسب قاعدة 40٪ (د.ت)",
+  "Priorité":"الأولويّة",
+  "Qté achat initial":"كمّية الشراء الأوّليّة",
+  "Coût du stock (DT)":"كلفة المخزون (د.ت)",
+  "Notes":"ملاحظات",
+  "Bouteille isotherme avec affichage LED de température":"قارورة حراريّة بشاشة تبيّن درجة الحرارة",
+  "Hiver / Gadget":"الشتاء / أدوات ذكيّة",
+  "Succès hivernal, démo facile sur TikTok":"مناسبة للشتاء، وساهل تعمللها فيديو على TikTok",
+  "Chauffe-mains rechargeable / power bank":"دفّاية يدين قابلة للشحن / بطّارية متنقّلة",
+  "Hiver / Cadeau":"الشتاء / هديّة",
+  "Fort cadeau d'hiver":"هديّة باهية للشتاء",
+  "Couverture sherpa / polaire":"بطّانيّة شيربا / صوفيّة",
+  "Hiver / Maison":"الشتاء / الدار",
+  "Volumineux, livraison plus chère":"كبيرة شوية، والتوصيل ينجم يكون أغلى",
+  "Coussin chauffant électrique / bouillotte":"وسادة كهربائيّة سخّانة / قارورة ماء سخون",
+  "Saisonnier":"موسميّة",
+  "Diffuseur d'arômes / mini humidificateur":"ناشر عطور / مرطّب هواء صغير",
+  "Maison":"الدار",
+  "Bon pour les vidéos publicitaires":"تنفع لفيديوهات الإشهار",
+  "Organisateur de cuisine / porte-épices":"منظّم للمطبخ / حامل توابل",
+  "Cuisine":"المطبخ",
+  "Evergreen, public féminin":"مطلوبة طول العام، خاصّة عند النساء",
+  "Set de boîtes repas en verre":"طقم علب أكل من البلّور",
+  "Evergreen":"مطلوبة طول العام",
+  "Mini hachoir électrique USB":"فرّامة صغيرة USB",
+  "Cuisine / Gadget":"المطبخ / أدوات ذكيّة",
+  "Démo « wow »":"فيديو يورّي النتيجة بطريقة تشدّ الانتباه",
+  "Support téléphone magnétique voiture":"حامل مغناطيسي للتليفون في الكرهبة",
+  "Auto / Accessoire":"كرهبة / إكسسوار",
+  "Vendre en lot de 2 pour 32 DT":"بيع زوز مع بعضهم بـ32 د.ت",
+  "Écouteurs sans fil (milieu de gamme)":"سماعات لاسلكيّة (فئة متوسّطة)",
+  "Électronique":"إلكترونيك",
+  "Risque de retour plus élevé":"احتمال الإرجاع أكبر",
+  "Bracelet connecté":"سوار ذكي",
+  "Tester en petite quantité":"جرّب كمّية صغيرة",
+  "Bandes LED RGB (5 m)":"شريط إضاءة LED ملوّن (5 م)",
+  "Maison / Déco":"الدار / ديكور",
+  "Très visuel sur TikTok":"يظهر باهي في فيديوهات TikTok",
+  "Chouchous satin / set boucleur sans chaleur":"ربطات شعر ساتان / طقم تمويج من غير سخانة",
+  "Beauté":"الجمال",
+  "Vendre en lot pour augmenter le panier":"بيعهم في طقم باش تزيد قيمة الطلب",
+  "Set gua sha / rouleau facial":"طقم غوا شا / رولر للوجه",
+  "Public beauté":"موجّه للناس المهتمّين بالجمال",
+  "Tondeuse / coupe-cheveux":"ماكينة حلاقة / قصّ شعر",
+  "Homme / Soins":"للرجال / عناية",
+  "Demande régulière":"عليها طلب طول العام",
+  "Parures de bijoux en acier inoxydable":"طقم حليّ من الفولاذ المقاوم للصدأ",
+  "Mode":"الموضة",
+  "Photos de qualité indispensables":"لازم تصاور واضحة وباهيّة",
+  "Rouleau anti-poils / griffoir pour chat":"رولر ينحّي الشعر / خدّاشة للقطوس",
+  "Animaux":"الحيوانات",
+  "Niche en croissance":"فئة قاعدة تكبر",
+  "Set repas bébé en silicone":"طقم ماكلة للرضيع من السيليكون",
+  "Bébé":"الرضّع",
+  "Vérifier l'étiquetage de sécurité":"تثبّت من علامات السلامة على المنتوج",
+  "Poterie artisanale / ustensiles en bois d'olivier":"فخّار تقليدي / أدوات من خشب الزيتون",
+  "Artisanat local":"صناعات تقليديّة تونسيّة",
+  "Local, cadeaux et diaspora":"منتوج محلّي، ينفع للهدايا وللتوانسة بالخارج",
+  "Coffret beauté tunisien (eau de rose, huile de figue de barbarie, henné)":"علبة جمال تونسيّة (ماء ورد، زيت التين الشوكي، حنّة)",
+  "Artisanat / Cadeau":"صناعات تقليديّة / هديّة",
+  "Fort produit cadeau, Ramadan et Aïd":"منتوج باهي للهدايا في رمضان والعيد",
+  "Top 8":"من أفضل 8 منتجات",
+  "Test":"للتجربة",
+  "TOTAL / MOYENNE":"المجموع / المعدّل",
+  "Prix de gros et de vente = estimations (colonnes bleues, modifiables). Profit net calculé avec les hypothèses de la feuille « Hypothèses ».":"أسعار الشراء والبيع تقديريّة (الخانات الزرقاء تنجم تبدّلهم). الربح الصافي محسوب حسب الفرضيّات في جدول «الفرضيّات».",
+  "Lecture : « Marge brute » = (vente − gros) / vente, avant livraison, pub et refus. « Profit espéré » intègre refus, retour, emballage et pub cible. Un chiffre rouge = produit non rentable avec ces hypothèses (ex. vendre en lot).":"التفسير: «الربح الخام» = (سعر البيع − سعر الشراء) ÷ سعر البيع، قبل التوصيل والإشهار والطلبات المرفوضة. «الربح المتوقّع» يحسب الرفض والإرجاع والتغليف والإشهار. الرقم بالأحمر يعني السلعة موش مربحة حسب التقديرات هاذي (مثال: بيعها في طقم).",
+  "Quantités initiales : proposition pour ~450 DT de stock sur les 8 produits prioritaires ; à ajuster.":"الكمّيات الأوّليّة: اقتراح مخزون بحوالي 450 د.ت للـ8 منتجات ذات الأولويّة؛ تنجم تبدّلها.",
+  "Poste":"المصاريف",
+  "Version 1 000 DT":"خطّة 1,000 د.ت",
+  "% du total":"النسبة من المجموع",
+  "Version 500 DT":"خطّة 500 د.ت",
+  "Stock (8–10 produits, 5–10 unités chacun)":"مخزون (8–10 منتجات، 5–10 قطع من كلّ واحد)",
+  "Publicité (tests Facebook + TikTok)":"إشهار (تجارب على Facebook وTikTok)",
+  "Site web / nom de domaine / identité visuelle":"موقع / اسم نطاق / هويّة بصريّة",
+  "Emballage et contenu (photos, accessoires)":"تغليف ومحتوى (تصاور وإكسسوارات)",
+  "Réserve (retours, réassort)":"احتياط (إرجاع وإعادة التزوّد)",
+  "Contrôle du stock : coût du stock prévu (feuille Produits) : 447 DT ; budget stock (version 1 000 DT) : 450 DT ; écart (budget − prévu) : 3 DT ; statut : Dans le budget.":"مراقبة المخزون: كلفته حسب جدول المنتجات 447 د.ت؛ الميزانيّة المخصّصة في خطّة 1,000 د.ت هي 450 د.ت؛ الفرق 3 د.ت؛ الحالة: داخل الميزانيّة.",
+  "Deux versions : 1 000 DT et 500 DT. Montants en bleu = modifiables.":"زوز خطط: 1,000 د.ت و500 د.ت. المبالغ باللون الأزرق تنجم تبدّلهم.",
+  "Zone / canal":"المنطقة / القناة",
+  "Où chercher":"وين تقلّب",
+  "Produits concernés":"المنتجات المعنيّة",
+  "Contact (à remplir)":"معلومات الاتصال (تتعمّر)",
+  "Prix obtenu (DT)":"السعر المتحصّل عليه (د.ت)",
+  "Quantité minimum":"أقلّ كمّية",
+  "Statut":"الحالة",
+  "Tunis – Médina":"تونس – المدينة العربي",
+  "Bab Souika, rue de Marseille, quartier Hafsia, souk Moncef Bey":"باب سويقة، نهج مرسيليا، حيّ الحفصيّة، سوق المنصف باي",
+  "Accessoires, cuisine, cadeaux (général)":"إكسسوارات، أدوات مطبخ، وهدايا (متنوّع)",
+  "À contacter":"يلزم الاتصال",
+  "Banlieue de Tunis":"ضواحي تونس",
+  "Ben Arous, Mégrine, Charguia (importateurs, entrepôts)":"بن عروس، مقرين، الشرقية (موردين ومخازن)",
+  "Électronique, gadgets, maison":"إلكترونيك، أدوات ذكيّة، ولوازم الدار",
+  "Sfax":"صفاقس",
+  "Grossistes d'articles ménagers et d'accessoires électroniques":"تجّار جملة في لوازم الدار وإكسسوارات الإلكترونيك",
+  "Ménager, accessoires":"لوازم الدار وإكسسوارات",
+  "Artisanat – poterie":"صناعات تقليديّة – فخّار",
+  "Nabeul, Guellala (Djerba), Sejnane (céramique traditionnelle)":"نابل، قلّالة (جربة)، سجنان (خزف تقليدي)",
+  "Produit 19":"المنتج 19",
+  "Artisanat – eaux florales":"صناعات تقليديّة – مياه الزهور",
+  "Nabeul (eau de rose, fleur d'oranger), coopératives":"نابل (ماء ورد وماء زهر)، تعاونيات",
+  "Produit 20":"المنتج 20",
+  "Facebook":"Facebook",
+  "Groupes « Grossiste Tunisie »":"مجموعات «Grossiste Tunisie»",
+  "Tous":"الكلّ",
+  "Instagram":"Instagram",
+  "Pages de grossistes":"صفحات تجّار الجملة",
+  "Tayara.tn":"Tayara.tn",
+  "Annonces de vendeurs proposant du gros":"إعلانات باعة يبيعوا بالجملة",
+  "Je n'ai pas pu vérifier d'entreprises précises : ce sont des zones et canaux de recherche. Remplissez les colonnes vierges au fil de vos visites.":"ما تثبّتناش من شركات معيّنة: هاذم بلايص وطرق للبحث برك. عمّر الخانات الفارغة كي تتقدّم في البحث.",
+  "Check-list fournisseur :":"قائمة التثبّت من المزوّد:",
+  "1. Demander une facture en bonne et due forme et tester 1 unité avant de commander plus.":"1. اطلب فاتورة قانونيّة وجرّب قطعة قبل ما تطلب كمّية أكبر.",
+  "2. Négocier 10–15 % de remise à partir de 10 unités.":"2. فاوض على تخفيض بين 10 و15٪ كان تشري 10 قطع ولا أكثر.",
+  "3. Demander la politique de retour/échange pour les articles défectueux.":"3. اسأل على شروط الإرجاع والتبديل كان السلعة فيها عطب.",
+  "4. Garder 2 fournisseurs par produit pour réassortir vite.":"4. حاول تلقى زوز مزوّدين لكلّ منتج باش تعاود تتزوّد بسرعة.",
+  "Semaine":"الأسبوع",
+  "Tâche":"المهمّة",
+  "Canal":"القناة",
+  "Semaine 1 – Préparer":"الأسبوع 1 – التحضير",
+  "Choisir le nom de marque et la niche (ex. « maison d'hiver et cadeaux »)":"اختار اسم الماركة والفئة (مثال: «لوازم الدار وهدايا الشتاء»)",
+  "Marque":"الماركة",
+  "À faire":"مازال ما تعملتش",
+  "Acheter des échantillons de 10–12 produits, tourner photos et courtes vidéos":"اشري عيّنات من 10–12 منتج وصوّر تصاور وفيديوهات قصيرة",
+  "Contenu":"المحتوى",
+  "Créer le site, la page Facebook et le compte TikTok":"اعمل الموقع وصفحة Facebook وحساب TikTok",
+  "Site / Facebook / TikTok":"الموقع / Facebook / TikTok",
+  "Semaine 2 – Lancement test":"الأسبوع 2 – تجربة الانطلاق",
+  "Acheter le stock des 6–8 produits prioritaires":"اشري مخزون 6–8 منتجات عندهم أولويّة",
+  "Achats":"الشراء",
+  "Publier 1–2 vidéos par jour sur TikTok et Reels":"هبّط 1–2 فيديو كلّ نهار على TikTok وReels",
+  "TikTok / Facebook":"TikTok / Facebook",
+  "Pub Facebook : 5–10 DT/jour par produit (Tunisie, 18–45 ans)":"إشهار Facebook: من 5 لـ10 د.ت في النهار لكلّ منتج (تونس، عمر 18–45)",
+  "Confirmer chaque commande COD par téléphone/WhatsApp avant expédition":"أكّد كلّ طلب دفع عند التسليم بالتليفون ولا WhatsApp قبل ما تبعثو",
+  "Opérations":"الخدمة اليوميّة",
+  "Semaine 3 – Couper et accélérer":"الأسبوع 3 – وقّف الخاسر وزيد في الرابح",
+  "Arrêter les produits dont le CPA dépasse 40 % du prix après ~20 DT dépensés":"وقّف الإشهار على المنتجات اللي كلفة البيع متاعها تفوت 40٪ من السعر بعد صرف حوالي 20 د.ت",
+  "Pub":"الإشهار",
+  "Augmenter les budgets des gagnants de 20–30 % tous les 2 jours":"زيد ميزانيّة المنتجات الرابحة بـ20–30٪ كلّ يومين",
+  "Lancer des lots et offres « achetez 2 »":"اعمل عروض أطقم «اشري 2»",
+  "Site":"الموقع",
+  "Semaine 4 – Black Friday (27 nov.)":"الأسبوع 4 – Black Friday (27 نوفمبر)",
+  "Promo Black Friday avec compte à rebours de stock limité":"عرض Black Friday مع عدّ تنازلي لمخزون محدود",
+  "Site / Facebook / TikTok":"الموقع / Facebook / TikTok",
+  "Retargeting des visiteurs du site et des spectateurs vidéo":"عاود استهدف زوّار الموقع والناس اللي تفرّجوا في الفيديوهات",
+  "Facebook / TikTok":"Facebook / TikTok",
+  "Réassortir les gagnants chez le 2e fournisseur":"عاود زوّد المنتجات الرابحة من المزوّد الثاني",
+  "Collecter avis clients et témoignages vidéo":"اجمع آراء الحرفاء وشهادات بالفيديو",
+  "Semaine 4 – Black Friday":"الأسبوع 4 – Black Friday",
+  "Plus tard":"من بعد",
+  "Janvier : commencer le sourcing pour le Ramadan 2027 (début vers le 8 fév.)":"في جانفي: ابدا قلّب على سلع رمضان 2027 (يبدأ تقريبًا 8 فيفري)",
+  "Mise en place":"إعداد",
+  "Passer en COD principal ; ajouter Flouci / Konnect / ClicToPay ensuite":"خلّي الدفع عند التسليم هو الأساسي؛ زيد Flouci / Konnect / ClicToPay من بعد",
+  "Comparer Aramex, First Delivery, Rapid Poste, Intigo (prix + délai de versement COD)":"قارن Aramex وFirst Delivery وRapid Poste وIntigo (السعر ووقت تحويل فلوس الدفع عند التسليم)",
+  "Livraison":"التوصيل",
+  "Régulariser l'activité (micro-entreprise ou équivalent) avec un comptable":"سوّي وضعية النشاط (مؤسّسة صغرى ولا ما يعادلها) مع محاسب",
+  "Juridique":"قانوني",
+  "Date":"التاريخ",
+  "Dépense pub (DT)":"مصاريف الإشهار (د.ت)",
+  "Commandes passées":"الطلبات المسجّلة",
+  "Commandes confirmées":"الطلبات المؤكّدة",
+  "Commandes livrées":"الطلبات الموصّلة",
+  "Chiffre d'affaires livré (DT)":"رقم المعاملات للطلبات الموصّلة (د.ت)",
+  "Taux de confirmation":"نسبة تأكيد الطلبات",
+  "Taux de livraison":"نسبة التوصيل",
+  "Coût pub par vente livrée (DT)":"كلفة الإشهار لكلّ بيعة موصّلة (د.ت)",
+  "Panier moyen (DT)":"معدّل قيمة الطلب (د.ت)",
+  "Alerte CPA":"تنبيه كلفة البيع",
+  "10 nov. 2026":"10 نوفمبر 2026",
+  "Bouteille isotherme LED":"قارورة حراريّة بشاشة LED",
+  "OK":"باهي",
+  "Date de début indicative : 3 nov. 2026 ; Black Friday le 27 nov. 2026.":"تاريخ البداية المقترح: 3 نوفمبر 2026؛ وBlack Friday نهار 27 نوفمبر 2026.",
+  "Saisissez les colonnes bleues ; la ligne du 10 nov. 2026 est un EXEMPLE (à écraser). Objectifs : confirmation > 75 %, livraison > 80 %.":"عمّر الخانات الزرقاء؛ سطر 10 نوفمبر 2026 مثال وتنجم تبدّلو. الأهداف: تأكيد أكثر من 75٪ وتوصيل أكثر من 80٪.",
+  "Avancement : 0 %.":"التقدّم: 0٪.",
+  "Note : TikTok Shop n'est pas disponible en Tunisie ; TikTok sert de canal organique/pub vers le site ou la page Facebook.":"ملاحظة: TikTok Shop موش متوفّر في تونس؛ استعمل TikTok للنشر العادي ولا للإشهار وتوجيه الناس للموقع ولا لصفحة Facebook.",
+  "TOTAL":"المجموع",
+  "Rechercher dans cette feuille…":"قلّب في الجدول هذا…",
+  "Rechercher dans ":"قلّب في ",
+  "ligne":"سطر",
+  "lignes":"سطور",
+  "Mot de passe incorrect. Réessayez.":"كلمة السرّ غالطة. عاود جرّب.",
+  "La session de navigateur ne peut pas conserver l'accès. Rechargez la page dans un onglet normal.":"المتصفّح ما نجّمش يحفظ الدخول في الجلسة. حلّ الصفحة في تبويب عادي وعاود جرّب.",
+  "Impossible de conserver l'accès dans cet onglet. Vérifiez les paramètres de confidentialité du navigateur.":"ما نجّمش نحفظ الدخول في التبويب هذا. تثبّت من إعدادات الخصوصيّة في المتصفّح."
+};
+function translateText(value){return ARABIC&&Object.prototype.hasOwnProperty.call(AR,value)?AR[value]:value}
+if(ARABIC){
+  document.documentElement.lang="ar-TN";
+  document.documentElement.dir="rtl";
+  document.title="لوحة تسيير Mindo";
+  document.getElementById("page-description").content="لوحة تسيير Mindo: المنتجات والميزانيّة والمزوّدين ومتابعة المؤشّرات.";
+  document.querySelector(".logo").setAttribute("aria-label",translateText("Mindo, boutique"));
+  document.getElementById("language-toggle").textContent=translateText("Français");
+  document.getElementById("language-toggle").href="?lang=fr";
+  document.querySelector("main .eyebrow").textContent=translateText("Tableau · invite d’accès");
+  document.querySelector("main h1").textContent=translateText("Tableau de gestion Mindo");
+  document.querySelector("main .intro").textContent=translateText("Les six feuilles du classeur, avec leurs produits, hypothèses, budgets, fournisseurs, plan de lancement et indicateurs.");
+  document.getElementById("public-notice-title").textContent="معلومة:";
+  document.getElementById("public-notice-text").textContent="هاذي كان نافذة كلمة سرّ شكلية. البيانات وكلمة السرّ موجودين في كود الموقع وينجّم أيّ شخص يطّلع عليهم؛ موش حماية حقيقية.";
+  tabs = document.getElementById("sheet-tabs");
+  tabs.setAttribute("aria-label","جداول الملف");
+  document.querySelector("footer").innerHTML="© Mindo · <a href=\"index.html\">"+translateText("Retour à la boutique")+"</a>";
+  document.querySelector(".password-card .eyebrow").textContent=translateText("Espace de gestion");
+  document.getElementById("gate-title").textContent=translateText("Mot de passe requis");
+  document.getElementById("gate-description").textContent=translateText("Saisissez le mot de passe pour afficher le tableau Mindo.");
+  document.querySelector('label[for="dashboard-password"]').textContent=translateText("Mot de passe");
+  document.querySelector("#password-form button").textContent=translateText("Ouvrir le tableau");
+}
 var tabs=document.getElementById("sheet-tabs"),content=document.getElementById("sheet-content"),activeSheet=0;
 function renderSheet(index){
   activeSheet=index;
@@ -213,7 +484,7 @@ function renderSheet(index){
     button.type="button";button.className="sheet-tab";button.id="sheet-tab-"+i;
     button.setAttribute("role","tab");button.setAttribute("aria-selected",String(i===index));
     button.setAttribute("aria-controls","sheet-content");button.tabIndex=i===index?0:-1;
-    button.textContent=sheet.name;
+    button.textContent=translateText(sheet.name);
     button.addEventListener("click",function(){renderSheet(i)});
     button.addEventListener("keydown",function(e){
       if(e.key!=="ArrowRight"&&e.key!=="ArrowLeft")return;
@@ -226,24 +497,24 @@ function renderSheet(index){
   content.setAttribute("aria-labelledby","sheet-tab-"+index);
   var sheet=SHEETS[index];
   var heading=document.createElement("div");heading.className="sheet-heading";
-  var h=document.createElement("h2");h.textContent=sheet.name;heading.appendChild(h);
-  var description=document.createElement("p");description.textContent=sheet.description;heading.appendChild(description);
+  var h=document.createElement("h2");h.textContent=translateText(sheet.name);heading.appendChild(h);
+  var description=document.createElement("p");description.textContent=translateText(sheet.description);heading.appendChild(description);
   content.replaceChildren(heading);
-  var card=document.createElement("section");card.className="table-card";card.setAttribute("aria-label",sheet.name);
+  var card=document.createElement("section");card.className="table-card";card.setAttribute("aria-label",translateText(sheet.name));
   var tools=document.createElement("div");tools.className="table-tools";
-  var search=document.createElement("input");search.type="search";search.placeholder="Rechercher dans cette feuille…";search.setAttribute("aria-label","Rechercher dans "+sheet.name);
+  var search=document.createElement("input");search.type="search";search.placeholder=translateText("Rechercher dans cette feuille…");search.setAttribute("aria-label",translateText("Rechercher dans ")+translateText(sheet.name));
   var count=document.createElement("span");count.id="row-count";count.setAttribute("role","status");
   tools.append(search,count);card.appendChild(tools);
   var scroll=document.createElement("div");scroll.className="table-scroll";
   var table=document.createElement("table");
   var thead=document.createElement("thead"),headRow=document.createElement("tr");
-  sheet.columns.forEach(function(label){var th=document.createElement("th");th.scope="col";th.textContent=label;headRow.appendChild(th)});
+  sheet.columns.forEach(function(label){var th=document.createElement("th");th.scope="col";th.textContent=translateText(label);headRow.appendChild(th)});
   thead.appendChild(headRow);table.appendChild(thead);
   var tbody=document.createElement("tbody"),rowElements=[];
   sheet.rows.forEach(function(row){
     var tr=document.createElement("tr");
     row.forEach(function(value,j){
-      var td=document.createElement("td");td.textContent=value||"—";
+      var td=document.createElement("td");td.textContent=value?translateText(value):"—";
       if(sheet.name==="Produits"&&j===1)td.className="product-cell";
       if(sheet.name==="Produits"&&j===2)td.className="category-cell";
       if(sheet.name==="Produits"&&j===4)td.className="price";
@@ -256,22 +527,22 @@ function renderSheet(index){
   table.appendChild(tbody);
   if(sheet.totals){
     var tfoot=document.createElement("tfoot"),totalRow=document.createElement("tr");
-    sheet.totals.forEach(function(value){var td=document.createElement("td");td.textContent=value||"—";totalRow.appendChild(td)});
+    sheet.totals.forEach(function(value){var td=document.createElement("td");td.textContent=value?translateText(value):"—";totalRow.appendChild(td)});
     tfoot.appendChild(totalRow);table.appendChild(tfoot);
   }
   scroll.appendChild(table);card.appendChild(scroll);content.appendChild(card);
-  count.textContent=rowElements.length+" ligne"+(rowElements.length===1?"":"s");
+  count.textContent=rowElements.length+" "+translateText(rowElements.length===1?"ligne":"lignes");
   search.addEventListener("input",function(){
     var query=search.value.trim().toLocaleLowerCase(),visible=0;
     rowElements.forEach(function(row){
       var match=row.textContent.toLocaleLowerCase().indexOf(query)!==-1;
       row.hidden=!match;if(match)visible++;
     });
-    count.textContent=visible+" ligne"+(visible===1?"":"s");
+    count.textContent=visible+" "+translateText(visible===1?"ligne":"lignes");
   });
   if(sheet.notes&&sheet.notes.length){
     var notes=document.createElement("aside");notes.className="sheet-notes";
-    sheet.notes.forEach(function(text){var p=document.createElement("p");p.textContent=text;notes.appendChild(p)});
+    sheet.notes.forEach(function(text){var p=document.createElement("p");p.textContent=translateText(text);notes.appendChild(p)});
     content.appendChild(notes);
   }
 }
@@ -295,19 +566,19 @@ try{
   else passwordInput.focus();
 }catch(error){
   passwordInput.focus();
-  document.getElementById("password-error").textContent="La session de navigateur ne peut pas conserver l'accès. Rechargez la page dans un onglet normal.";
+  document.getElementById("password-error").textContent=translateText("La session de navigateur ne peut pas conserver l'accès. Rechargez la page dans un onglet normal.");
 }
 document.getElementById("password-form").addEventListener("submit",function(event){
   event.preventDefault();
   if(passwordInput.value!=="mindoAmer"){
-    document.getElementById("password-error").textContent="Mot de passe incorrect. Réessayez.";
+    document.getElementById("password-error").textContent=translateText("Mot de passe incorrect. Réessayez.");
     passwordInput.select();
     return;
   }
   try{
     sessionStorage.setItem(accessKey,"granted");
   }catch(error){
-    document.getElementById("password-error").textContent="Impossible de conserver l'accès dans cet onglet. Vérifiez les paramètres de confidentialité du navigateur.";
+    document.getElementById("password-error").textContent=translateText("Impossible de conserver l'accès dans cet onglet. Vérifiez les paramètres de confidentialité du navigateur.");
     return;
   }
   document.getElementById("password-error").textContent="";
