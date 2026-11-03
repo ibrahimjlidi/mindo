@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tableau des produits – Mindo</title>
+<meta name="description" content="Tableau de gestion interne Mindo.">
+<meta name="theme-color" content="#142b4d">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@400;600;700;800&display=swap">
+<style>
+:root{color-scheme:light dark;--bg:#f4f6fb;--card:#fff;--ink:#17243a;--mute:#68758a;--brand:#0874ce;--line:#e3e9f2;--navy:#142b4d;--gold:#ffc34d}
+@media(prefers-color-scheme:dark){:root{--bg:#101827;--card:#182337;--ink:#edf3ff;--mute:#a0aec4;--brand:#68b5ff;--line:#2c3b53;--navy:#0d192b}}
+*{box-sizing:border-box}
+body{min-height:100vh;margin:0;background:var(--bg);color:var(--ink);font-family:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+header{background:var(--card);border-bottom:1px solid var(--line)}
+.bar{max-width:1120px;min-height:68px;margin:auto;padding:10px 24px;display:flex;align-items:center;gap:24px}
+.brand-group{display:inline-flex;align-items:center;white-space:nowrap}
+.logo{font-family:"Bricolage Grotesque",sans-serif;font-size:1.75rem;font-weight:800;letter-spacing:-.06em;text-decoration:none}
+.logo-dot{width:18px;height:22px;margin-left:1px;display:grid;place-items:center}
+.logo-dot i{display:block;width:9px;height:9px;border-radius:50%;background:var(--gold);transition:transform .18s ease,box-shadow .18s ease}
+.logo-dot:hover i{transform:scale(1.35);box-shadow:0 0 0 5px rgba(255,195,77,.24)}
+.nav{margin-left:auto;display:flex;gap:20px;font-size:.9rem;font-weight:700}
+.nav a{text-decoration:none}
+.nav a:hover{color:var(--brand)}
+main{width:min(100% - 32px,1000px);margin:0 auto;padding:52px 0 64px}
+.eyebrow{color:var(--brand);font-size:.78rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+h1{margin:8px 0 10px;font-family:"Bricolage Grotesque",sans-serif;font-size:clamp(2.2rem,6vw,3.5rem);line-height:1.05;letter-spacing:-.05em}
+.intro{margin:0;color:var(--mute)}
+.public-notice{margin-top:20px;padding:12px 15px;border:1px solid color-mix(in srgb,var(--gold) 55%,var(--line));border-radius:11px;background:color-mix(in srgb,var(--gold) 12%,var(--card));font-size:.86rem}
+.password-gate{position:fixed;inset:0;z-index:20;display:grid;place-items:center;overflow-y:auto;padding:20px;background:rgba(12,24,42,.72);backdrop-filter:blur(8px)}
+.password-gate[hidden]{display:none}
+.password-card{width:min(100%,440px);padding:clamp(24px,6vw,36px);border:1px solid var(--line);border-radius:20px;background:var(--card);box-shadow:0 24px 70px rgba(0,0,0,.24)}
+.password-card h1{font-size:clamp(1.9rem,7vw,2.5rem)}
+.password-card p{color:var(--mute)}
+.password-form{display:grid;gap:12px;margin-top:22px}
+.password-form input{width:100%;min-height:48px;padding:11px 14px;border:1px solid var(--line);border-radius:11px;background:var(--bg);color:var(--ink);font:inherit}
+.password-form input:focus{border-color:var(--brand);outline:3px solid color-mix(in srgb,var(--brand) 18%,transparent)}
+.password-form button{min-height:48px;padding:11px 16px;border:0;border-radius:999px;background:var(--navy);color:#fff;font:inherit;font-weight:800;cursor:pointer}
+.password-form button:hover{filter:brightness(1.15)}
+.password-error{min-height:1.5em;margin:0;color:#b42318!important;font-size:.88rem}
+main[hidden]{display:none}
+.sheet-tabs{display:flex;gap:8px;overflow-x:auto;margin:26px 0 0;padding:3px 2px 10px;scrollbar-width:thin}
+.sheet-tab{flex:none;padding:10px 15px;border:1px solid var(--line);border-radius:999px;background:var(--card);font:inherit;font-size:.86rem;font-weight:700;white-space:nowrap;cursor:pointer}
+.sheet-tab:hover{border-color:var(--brand)}
+.sheet-tab[aria-selected="true"]{border-color:var(--navy);background:var(--navy);color:#fff}
+.sheet-heading{margin:22px 0 12px}
+.sheet-heading h2{margin:0;font-family:"Bricolage Grotesque",sans-serif;font-size:1.55rem;letter-spacing:-.03em}
+.sheet-heading p{margin:5px 0 0;color:var(--mute);font-size:.9rem}
+.table-card{margin-top:26px;overflow:hidden;border:1px solid var(--line);border-radius:16px;background:var(--card);box-shadow:0 12px 32px rgba(23,36,58,.06)}
+.sheet-heading+.table-card{margin-top:0}
+.table-tools{padding:16px;display:flex;align-items:center;justify-content:space-between;gap:14px;border-bottom:1px solid var(--line)}
+.table-tools input{width:min(100%,360px);min-height:43px;padding:10px 13px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit}
+.table-tools input:focus{border-color:var(--brand);outline:3px solid color-mix(in srgb,var(--brand) 18%,transparent)}
+#product-count{color:var(--mute);font-size:.84rem;font-weight:700;white-space:nowrap}
+.table-scroll{overflow-x:auto}
+table{width:100%;min-width:720px;border-collapse:collapse;text-align:left}
+thead{background:var(--navy);color:#fff}
+th,td{padding:14px 18px}
+th{font-size:.78rem;letter-spacing:.04em}
+td{border-bottom:1px solid var(--line);font-size:.9rem}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:color-mix(in srgb,var(--brand) 6%,var(--card))}
+td:last-child,th:last-child{text-align:right;white-space:nowrap}
+.price{color:var(--brand);font-weight:800}
+tfoot{background:color-mix(in srgb,var(--brand) 7%,var(--card));font-weight:800}
+tfoot td{border-top:2px solid var(--line);border-bottom:0}
+.sheet-notes{margin:16px 0 0;padding:15px 18px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.sheet-notes strong{display:block;margin-bottom:6px}
+.sheet-notes p{margin:5px 0;color:var(--mute);font-size:.86rem}
+.progress-track{height:9px;margin-top:8px;overflow:hidden;border-radius:99px;background:var(--line)}
+.progress-fill{height:100%;border-radius:inherit;background:var(--brand)}
+.empty-row{text-align:center;color:var(--mute)}
+footer{padding:17px 24px;border-top:1px solid var(--line);color:var(--mute);text-align:center;font-size:.82rem}
+@media(max-width:600px){.bar{padding:10px 16px}.nav{gap:14px;font-size:.82rem}main{padding:38px 0 48px}.table-tools{align-items:flex-start;flex-direction:column}.table-tools input{width:100%}th,td{padding:12px 13px}.category-cell{min-width:132px}.product-cell{min-width:230px}.sheet-heading h2{font-size:1.35rem}}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <span class="brand-group"><a class="logo" href="index.html" aria-label="Mindo, boutique">Mindo</a></span>
+  </div>
+</header>
+<main hidden>
+  <span class="eyebrow">Tableau · invite d’accès</span>
+  <h1>Tableau de gestion Mindo</h1>
+  <p class="intro">Les six feuilles du classeur, avec leurs produits, hypothèses, budgets, fournisseurs, plan de lancement et indicateurs.</p>
+  <p class="public-notice"><strong>À savoir :</strong> cette fenêtre est une simple invite visuelle. Les données restent dans le code public du site et ne sont pas réellement protégées.</p>
+  <div class="sheet-tabs" id="sheet-tabs" role="tablist" aria-label="Feuilles du classeur"></div>
+  <section id="sheet-content" role="tabpanel" tabindex="0" aria-live="polite"></section>
+</main>
+<footer>© Mindo · <a href="index.html">Retour à la boutique</a></footer>
+<div class="password-gate" id="password-gate" role="dialog" aria-modal="true" aria-labelledby="gate-title" aria-describedby="gate-description">
+  <section class="password-card">
+    <span class="eyebrow">Espace de gestion</span>
+    <h1 id="gate-title">Mot de passe requis</h1>
+    <p id="gate-description">Saisissez le mot de passe pour afficher le tableau Mindo.</p>
+    <form class="password-form" id="password-form">
+      <label for="dashboard-password">Mot de passe</label>
+      <input id="dashboard-password" name="password" type="password" autocomplete="current-password" required autofocus>
+      <button type="submit">Ouvrir le tableau</button>
+      <p class="password-error" id="password-error" role="alert" aria-live="polite"></p>
+    </form>
+  </section>
+</div>
+<script>
+var SHEETS=[
+  {name:"Hypothèses",description:"Hypothèses de coûts et objectifs utilisés par les autres feuilles.",columns:["Paramètre","Valeur","Source / explication"],rows:[
+    ["Frais de livraison (DT)","7","Estimation du tarif transporteur (~7 DT). Payé par le client, mais perdu en cas de refus."],
+    ["Emballage par commande (DT)","1","Estimation (sachet, carton, étiquette)."],
+    ["Taux de refus COD","20 %","Milieu de la fourchette 15–25 % indiquée dans le plan. À remplacer par vos chiffres réels."],
+    ["Coût de retour en cas de refus (DT)","7","Hypothèse : on perd les frais de livraison aller-retour (marchandise récupérée et revendable)."],
+    ["Coût pub cible par commande (DT)","10","Milieu de la cible 8–12 DT du plan."],
+    ["Règle d'arrêt : CPA max en % du prix de vente","40 %","Arrêter un produit si le coût par vente dépasse 40 % du prix après ~20 DT dépensés."],
+    ["Dépense test minimale avant décision (DT)","20","Règle du plan (semaine 3)."],
+    ["Taux de confirmation visé","75 %","Objectif du plan (> 75 %)."],
+    ["Taux de livraison visé","80 %","Objectif du plan (> 80 %)."]
+  ],notes:[
+    "Cellules en bleu sur fond jaune = à modifier. Toutes les autres feuilles se recalculent automatiquement.",
+    "Avertissement : tous les prix sont des estimations de fourchettes de gros en Tunisie, pas des devis réels. Confirmez en personne avant tout achat."
+  ]},
+  {name:"Produits",description:"Prix, marges, rentabilité estimée, priorité et quantité d'achat proposée.",columns:["#","Produit","Catégorie","Prix de gros (DT)","Prix de vente (DT)","Marge brute (DT)","Marge brute (%)","Profit/commande livrée, avant refus (DT)","Profit espéré/commande passée, après refus (DT)","CPA max rentable (DT)","CPA max règle 40 % (DT)","Priorité","Qté achat initial","Coût du stock (DT)","Notes"],rows:[
+    ["1","Bouteille isotherme avec affichage LED de température","Hiver / Gadget","9","29","20","68.97 %","9","3.8","13.8","11.6","Top 8","8","72","Succès hivernal, démo facile sur TikTok"],
+    ["2","Chauffe-mains rechargeable / power bank","Hiver / Cadeau","14","39","25","64.10 %","14","7.8","17.8","15.6","Test","0","0","Fort cadeau d'hiver"],
+    ["3","Couverture sherpa / polaire","Hiver / Maison","22","59","37","62.71 %","26","17.4","27.4","23.6","Test","0","0","Volumineux, livraison plus chère"],
+    ["4","Coussin chauffant électrique / bouillotte","Hiver / Maison","12","35","23","65.71 %","12","6.2","16.2","14","Test","0","0","Saisonnier"],
+    ["5","Diffuseur d'arômes / mini humidificateur","Maison","15","45","30","66.67 %","19","11.8","21.8","18","Top 8","4","60","Bon pour les vidéos publicitaires"],
+    ["6","Organisateur de cuisine / porte-épices","Cuisine","10","29","19","65.52 %","8","3","13","11.6","Test","0","0","Evergreen, public féminin"],
+    ["7","Set de boîtes repas en verre","Cuisine","12","35","23","65.71 %","12","6.2","16.2","14","Test","0","0","Evergreen"],
+    ["8","Mini hachoir électrique USB","Cuisine / Gadget","14","45","31","68.89 %","20","12.6","22.6","18","Top 8","5","70","Démo « wow »"],
+    ["9","Support téléphone magnétique voiture","Auto / Accessoire","4","19","15","78.95 %","4","-0.2","9.8","7.6","Top 8","9","36","Vendre en lot de 2 pour 32 DT"],
+    ["10","Écouteurs sans fil (milieu de gamme)","Électronique","18","49","31","63.27 %","20","12.6","22.6","19.6","Test","0","0","Risque de retour plus élevé"],
+    ["11","Bracelet connecté","Électronique","25","69","44","63.77 %","33","23","33","27.6","Test","0","0","Tester en petite quantité"],
+    ["12","Bandes LED RGB (5 m)","Maison / Déco","7","25","18","72 %","7","2.2","12.2","10","Top 8","8","56","Très visuel sur TikTok"],
+    ["13","Chouchous satin / set boucleur sans chaleur","Beauté","4","15","11","73.33 %","0","-3.4","6.6","6","Test","0","0","Vendre en lot pour augmenter le panier"],
+    ["14","Set gua sha / rouleau facial","Beauté","5","19","14","73.68 %","3","-1","9","7.6","Top 8","9","45","Public beauté"],
+    ["15","Tondeuse / coupe-cheveux","Homme / Soins","20","55","35","63.64 %","24","15.8","25.8","22","Test","0","0","Demande régulière"],
+    ["16","Parures de bijoux en acier inoxydable","Mode","6","25","19","76 %","8","3","13","10","Test","0","0","Photos de qualité indispensables"],
+    ["17","Rouleau anti-poils / griffoir pour chat","Animaux","6","22","16","72.73 %","5","0.6","10.6","8.8","Test","0","0","Niche en croissance"],
+    ["18","Set repas bébé en silicone","Bébé","10","32","22","68.75 %","11","5.4","15.4","12.8","Test","0","0","Vérifier l'étiquetage de sécurité"],
+    ["19","Poterie artisanale / ustensiles en bois d'olivier","Artisanat local","15","45","30","66.67 %","19","11.8","21.8","18","Top 8","4","60","Local, cadeaux et diaspora"],
+    ["20","Coffret beauté tunisien (eau de rose, huile de figue de barbarie, henné)","Artisanat / Cadeau","12","35","23","65.71 %","12","6.2","16.2","14","Top 8","4","48","Fort produit cadeau, Ramadan et Aïd"]
+  ],totals:["","TOTAL / MOYENNE","","12","36.3","24.3","68.34 %","","7.24","","","","51","447",""],notes:[
+    "Prix de gros et de vente = estimations (colonnes bleues, modifiables). Profit net calculé avec les hypothèses de la feuille « Hypothèses ».",
+    "Lecture : « Marge brute » = (vente − gros) / vente, avant livraison, pub et refus. « Profit espéré » intègre refus, retour, emballage et pub cible. Un chiffre rouge = produit non rentable avec ces hypothèses (ex. vendre en lot).",
+    "Quantités initiales : proposition pour ~450 DT de stock sur les 8 produits prioritaires ; à ajuster."
+  ]},
+  {name:"Budget",description:"Deux scénarios de lancement et contrôle du budget de stock.",columns:["Poste","Version 1 000 DT","% du total","Version 500 DT","% du total"],rows:[
+    ["Stock (8–10 produits, 5–10 unités chacun)","450","45 %","250","50 %"],
+    ["Publicité (tests Facebook + TikTok)","250","25 %","120","24 %"],
+    ["Site web / nom de domaine / identité visuelle","100","10 %","50","10 %"],
+    ["Emballage et contenu (photos, accessoires)","80","8 %","40","8 %"],
+    ["Réserve (retours, réassort)","120","12 %","40","8 %"],
+    ["TOTAL","1 000","100 %","500","100 %"]
+  ],notes:[
+    "Deux versions : 1 000 DT et 500 DT. Montants en bleu = modifiables.",
+    "Contrôle du stock : coût du stock prévu (feuille Produits) : 447 DT ; budget stock (version 1 000 DT) : 450 DT ; écart (budget − prévu) : 3 DT ; statut : Dans le budget."
+  ]},
+  {name:"Fournisseurs",description:"Pistes de recherche non vérifiées et suivi à compléter lors des démarches.",columns:["Zone / canal","Où chercher","Produits concernés","Contact (à remplir)","Prix obtenu (DT)","Quantité minimum","Statut"],rows:[
+    ["Tunis – Médina","Bab Souika, rue de Marseille, quartier Hafsia, souk Moncef Bey","Accessoires, cuisine, cadeaux (général)","—","—","—","À contacter"],
+    ["Banlieue de Tunis","Ben Arous, Mégrine, Charguia (importateurs, entrepôts)","Électronique, gadgets, maison","—","—","—","À contacter"],
+    ["Sfax","Grossistes d'articles ménagers et d'accessoires électroniques","Ménager, accessoires","—","—","—","À contacter"],
+    ["Artisanat – poterie","Nabeul, Guellala (Djerba), Sejnane (céramique traditionnelle)","Produit 19","—","—","—","À contacter"],
+    ["Artisanat – eaux florales","Nabeul (eau de rose, fleur d'oranger), coopératives","Produit 20","—","—","—","À contacter"],
+    ["Facebook","Groupes « Grossiste Tunisie »","Tous","—","—","—","À contacter"],
+    ["Instagram","Pages de grossistes","Tous","—","—","—","À contacter"],
+    ["Tayara.tn","Annonces de vendeurs proposant du gros","Tous","—","—","—","À contacter"]
+  ],notes:[
+    "Je n'ai pas pu vérifier d'entreprises précises : ce sont des zones et canaux de recherche. Remplissez les colonnes vierges au fil de vos visites.",
+    "Check-list fournisseur :",
+    "1. Demander une facture en bonne et due forme et tester 1 unité avant de commander plus.",
+    "2. Négocier 10–15 % de remise à partir de 10 unités.",
+    "3. Demander la politique de retour/échange pour les articles défectueux.",
+    "4. Garder 2 fournisseurs par produit pour réassortir vite."
+  ]},
+  {name:"Plan de lancement",description:"Plan de lancement sur 4 semaines, daté à partir du 3 novembre 2026.",columns:["Semaine","Tâche","Canal","Statut"],rows:[
+    ["Semaine 1 – Préparer","Choisir le nom de marque et la niche (ex. « maison d'hiver et cadeaux »)","Marque","À faire"],
+    ["Semaine 1 – Préparer","Acheter des échantillons de 10–12 produits, tourner photos et courtes vidéos","Contenu","À faire"],
+    ["Semaine 1 – Préparer","Créer le site, la page Facebook et le compte TikTok","Site / Facebook / TikTok","À faire"],
+    ["Semaine 2 – Lancement test","Acheter le stock des 6–8 produits prioritaires","Achats","À faire"],
+    ["Semaine 2 – Lancement test","Publier 1–2 vidéos par jour sur TikTok et Reels","TikTok / Facebook","À faire"],
+    ["Semaine 2 – Lancement test","Pub Facebook : 5–10 DT/jour par produit (Tunisie, 18–45 ans)","Facebook","À faire"],
+    ["Semaine 2 – Lancement test","Confirmer chaque commande COD par téléphone/WhatsApp avant expédition","Opérations","À faire"],
+    ["Semaine 3 – Couper et accélérer","Arrêter les produits dont le CPA dépasse 40 % du prix après ~20 DT dépensés","Pub","À faire"],
+    ["Semaine 3 – Couper et accélérer","Augmenter les budgets des gagnants de 20–30 % tous les 2 jours","Pub","À faire"],
+    ["Semaine 3 – Couper et accélérer","Lancer des lots et offres « achetez 2 »","Site","À faire"],
+    ["Semaine 4 – Black Friday (27 nov.)","Promo Black Friday avec compte à rebours de stock limité","Site / Facebook / TikTok","À faire"],
+    ["Semaine 4 – Black Friday (27 nov.)","Retargeting des visiteurs du site et des spectateurs vidéo","Facebook / TikTok","À faire"],
+    ["Semaine 4 – Black Friday (27 nov.)","Réassortir les gagnants chez le 2e fournisseur","Achats","À faire"],
+    ["Semaine 4 – Black Friday (27 nov.)","Collecter avis clients et témoignages vidéo","Contenu","À faire"],
+    ["Plus tard","Janvier : commencer le sourcing pour le Ramadan 2027 (début vers le 8 fév.)","Achats","À faire"],
+    ["Mise en place","Passer en COD principal ; ajouter Flouci / Konnect / ClicToPay ensuite","Site","À faire"],
+    ["Mise en place","Comparer Aramex, First Delivery, Rapid Poste, Intigo (prix + délai de versement COD)","Livraison","À faire"],
+    ["Mise en place","Régulariser l'activité (micro-entreprise ou équivalent) avec un comptable","Juridique","À faire"]
+  ],notes:[
+    "Date de début indicative : 3 nov. 2026 ; Black Friday le 27 nov. 2026.",
+    "Avancement : 0 %.",
+    "Note : TikTok Shop n'est pas disponible en Tunisie ; TikTok sert de canal organique/pub vers le site ou la page Facebook."
+  ]},
+  {name:"Suivi KPI",description:"Suivi quotidien des indicateurs. La ligne d'exemple est à écraser.",columns:["Date","Produit","Dépense pub (DT)","Commandes passées","Commandes confirmées","Commandes livrées","Chiffre d'affaires livré (DT)","Taux de confirmation","Taux de livraison","Coût pub par vente livrée (DT)","Panier moyen (DT)","Alerte CPA"],rows:[
+    ["10 nov. 2026","Bouteille isotherme LED","30","5","4","3","87","80 %","75 %","10","29","OK"],
+    ["TOTAL","","30","5","4","3","87","80 %","75 %","10","29",""]
+  ],notes:["Saisissez les colonnes bleues ; la ligne du 10 nov. 2026 est un EXEMPLE (à écraser). Objectifs : confirmation > 75 %, livraison > 80 %."]
+  }
+];
+var tabs=document.getElementById("sheet-tabs"),content=document.getElementById("sheet-content"),activeSheet=0;
+function renderSheet(index){
+  activeSheet=index;
+  tabs.innerHTML="";
+  SHEETS.forEach(function(sheet,i){
+    var button=document.createElement("button");
+    button.type="button";button.className="sheet-tab";button.id="sheet-tab-"+i;
+    button.setAttribute("role","tab");button.setAttribute("aria-selected",String(i===index));
+    button.setAttribute("aria-controls","sheet-content");button.tabIndex=i===index?0:-1;
+    button.textContent=sheet.name;
+    button.addEventListener("click",function(){renderSheet(i)});
+    button.addEventListener("keydown",function(e){
+      if(e.key!=="ArrowRight"&&e.key!=="ArrowLeft")return;
+      e.preventDefault();
+      var next=(i+(e.key==="ArrowRight"?1:SHEETS.length-1))%SHEETS.length;
+      renderSheet(next);document.getElementById("sheet-tab-"+next).focus();
+    });
+    tabs.appendChild(button);
+  });
+  content.setAttribute("aria-labelledby","sheet-tab-"+index);
+  var sheet=SHEETS[index];
+  var heading=document.createElement("div");heading.className="sheet-heading";
+  var h=document.createElement("h2");h.textContent=sheet.name;heading.appendChild(h);
+  var description=document.createElement("p");description.textContent=sheet.description;heading.appendChild(description);
+  content.replaceChildren(heading);
+  var card=document.createElement("section");card.className="table-card";card.setAttribute("aria-label",sheet.name);
+  var tools=document.createElement("div");tools.className="table-tools";
+  var search=document.createElement("input");search.type="search";search.placeholder="Rechercher dans cette feuille…";search.setAttribute("aria-label","Rechercher dans "+sheet.name);
+  var count=document.createElement("span");count.id="row-count";count.setAttribute("role","status");
+  tools.append(search,count);card.appendChild(tools);
+  var scroll=document.createElement("div");scroll.className="table-scroll";
+  var table=document.createElement("table");
+  var thead=document.createElement("thead"),headRow=document.createElement("tr");
+  sheet.columns.forEach(function(label){var th=document.createElement("th");th.scope="col";th.textContent=label;headRow.appendChild(th)});
+  thead.appendChild(headRow);table.appendChild(thead);
+  var tbody=document.createElement("tbody"),rowElements=[];
+  sheet.rows.forEach(function(row){
+    var tr=document.createElement("tr");
+    row.forEach(function(value,j){
+      var td=document.createElement("td");td.textContent=value||"—";
+      if(sheet.name==="Produits"&&j===1)td.className="product-cell";
+      if(sheet.name==="Produits"&&j===2)td.className="category-cell";
+      if(sheet.name==="Produits"&&j===4)td.className="price";
+      if(sheet.name==="Budget"&&j===0&&value==="TOTAL")tr.style.fontWeight="800";
+      if(sheet.name==="Suivi KPI"&&row[0]==="TOTAL")tr.style.fontWeight="800";
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);rowElements.push(tr);
+  });
+  table.appendChild(tbody);
+  if(sheet.totals){
+    var tfoot=document.createElement("tfoot"),totalRow=document.createElement("tr");
+    sheet.totals.forEach(function(value){var td=document.createElement("td");td.textContent=value||"—";totalRow.appendChild(td)});
+    tfoot.appendChild(totalRow);table.appendChild(tfoot);
+  }
+  scroll.appendChild(table);card.appendChild(scroll);content.appendChild(card);
+  count.textContent=rowElements.length+" ligne"+(rowElements.length===1?"":"s");
+  search.addEventListener("input",function(){
+    var query=search.value.trim().toLocaleLowerCase(),visible=0;
+    rowElements.forEach(function(row){
+      var match=row.textContent.toLocaleLowerCase().indexOf(query)!==-1;
+      row.hidden=!match;if(match)visible++;
+    });
+    count.textContent=visible+" ligne"+(visible===1?"":"s");
+  });
+  if(sheet.notes&&sheet.notes.length){
+    var notes=document.createElement("aside");notes.className="sheet-notes";
+    sheet.notes.forEach(function(text){var p=document.createElement("p");p.textContent=text;notes.appendChild(p)});
+    content.appendChild(notes);
+  }
+}
+tabs.addEventListener("keydown",function(e){
+  if(e.key!=="Home"&&e.key!=="End")return;
+  e.preventDefault();var next=e.key==="Home"?0:SHEETS.length-1;
+  renderSheet(next);document.getElementById("sheet-tab-"+next).focus();
+});
+renderSheet(0);
+var gate=document.getElementById("password-gate");
+var dashboard=document.querySelector("main");
+var passwordInput=document.getElementById("dashboard-password");
+var accessKey="mindo-dashboard-tab-access";
+function unlockDashboard(){
+  gate.hidden=true;
+  dashboard.hidden=false;
+  document.getElementById("sheet-tab-"+activeSheet).focus();
+}
+try{
+  if(sessionStorage.getItem(accessKey)==="granted")unlockDashboard();
+  else passwordInput.focus();
+}catch(error){
+  passwordInput.focus();
+  document.getElementById("password-error").textContent="La session de navigateur ne peut pas conserver l'accès. Rechargez la page dans un onglet normal.";
+}
+document.getElementById("password-form").addEventListener("submit",function(event){
+  event.preventDefault();
+  if(passwordInput.value!=="mindoAmer"){
+    document.getElementById("password-error").textContent="Mot de passe incorrect. Réessayez.";
+    passwordInput.select();
+    return;
+  }
+  try{
+    sessionStorage.setItem(accessKey,"granted");
+  }catch(error){
+    document.getElementById("password-error").textContent="Impossible de conserver l'accès dans cet onglet. Vérifiez les paramètres de confidentialité du navigateur.";
+    return;
+  }
+  document.getElementById("password-error").textContent="";
+  unlockDashboard();
+});
+</script>
+</body>
+</html>

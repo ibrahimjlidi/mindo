@@ -17,7 +17,10 @@ a{color:inherit}
 header{background:var(--card);border-bottom:1px solid var(--line)}
 .bar{max-width:1120px;min-height:68px;margin:auto;padding:10px 24px;display:flex;align-items:center;gap:24px}
 .logo{font-family:"Bricolage Grotesque",sans-serif;font-size:1.75rem;font-weight:800;letter-spacing:-.06em;text-decoration:none}
-.logo i{display:inline-block;width:9px;height:9px;margin-left:3px;border-radius:50%;background:#ffc34d}
+.brand-group{display:inline-flex;align-items:center;white-space:nowrap}
+.logo-dot{width:18px;height:22px;margin-left:1px;display:grid;place-items:center}
+.logo-dot i{display:block;width:9px;height:9px;border-radius:50%;background:#ffc34d;transition:transform .18s ease,box-shadow .18s ease}
+.logo-dot:hover i{transform:scale(1.35);box-shadow:0 0 0 5px rgba(255,195,77,.24)}
 .nav{margin-left:auto;display:flex;gap:20px;font-size:.9rem;font-weight:700}
 .nav a{text-decoration:none}
 .nav a:hover{color:var(--brand)}
@@ -44,7 +47,7 @@ footer{padding:18px 24px;border-top:1px solid var(--line);color:var(--mute);text
 <body>
 <header>
   <div class="bar">
-    <a class="logo" href="index.html" aria-label="Mindo, accueil">Mindo<i></i></a>
+    <span class="brand-group"><a class="logo" href="index.html" aria-label="Mindo, accueil">Mindo</a><a class="logo-dot" href="tableau.html" aria-label="Ouvrir le tableau Mindo"><i aria-hidden="true"></i></a></span>
     <nav class="nav" aria-label="Navigation principale">
       <a href="index.html">Accueil</a>
       <a href="index.html#catalogue">Boutique</a>

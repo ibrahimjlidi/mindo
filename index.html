@@ -23,7 +23,10 @@ button{font:inherit;cursor:pointer;color:inherit}
 header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid color-mix(in srgb,var(--line) 75%,transparent)}
 .bar{max-width:1240px;min-height:72px;margin:0 auto;display:flex;align-items:center;gap:28px;padding:10px 24px}
 .logo{font-family:"Bricolage Grotesque","Figtree",system-ui,sans-serif;font-weight:800;font-size:1.8rem;letter-spacing:-.06em;text-decoration:none;color:var(--ink)}
-.logo i{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--sun);margin-left:3px}
+.logo-group{display:inline-flex;align-items:center;white-space:nowrap}
+.logo-dot-link{width:18px;height:22px;margin-left:1px;display:grid;place-items:center}
+.logo-dot-link i{display:block;width:9px;height:9px;border-radius:50%;background:var(--sun);transition:transform .18s ease,box-shadow .18s ease}
+.logo-dot-link:hover i{transform:scale(1.35);box-shadow:0 0 0 5px color-mix(in srgb,var(--sun) 24%,transparent)}
 .grow{flex:1}
 .navlink{color:var(--mute);font-size:.9rem;font-weight:700;text-decoration:none}
 .navlink:hover{color:var(--brand)}
@@ -191,7 +194,7 @@ footer{margin-top:4px;border-top:1px solid var(--line);background:var(--card);te
 </head>
 <body>
 <div class="announcement">Livraison partout en Tunisie <span aria-hidden="true">·</span> Paiement à la réception</div>
-<header><div class="bar"><a class="logo" href="#" aria-label="Mindo, accueil">Mindo<i></i></a><button class="category-nav" id="category-nav" type="button">☰ <span>Toutes les catégories</span>⌄</button><a class="navlink" href="#catalogue">Accueil</a><a class="navlink" href="#catalogue">Boutique</a><a class="navlink" href="contact.html">Contact</a><div class="searchbox header-search"><input type="search" id="q" placeholder="Rechercher un produit…" aria-label="Rechercher un produit"></div><div class="grow"></div>
+<header><div class="bar"><span class="logo-group"><a class="logo" href="#" aria-label="Mindo, accueil">Mindo</a><a class="logo-dot-link" href="tableau.html" aria-label="Ouvrir le tableau Mindo"><i aria-hidden="true"></i></a></span><button class="category-nav" id="category-nav" type="button">☰ <span>Toutes les catégories</span>⌄</button><a class="navlink" href="#catalogue">Accueil</a><a class="navlink" href="#catalogue">Boutique</a><a class="navlink" href="contact.html">Contact</a><div class="searchbox header-search"><input type="search" id="q" placeholder="Rechercher un produit…" aria-label="Rechercher un produit"></div><div class="grow"></div>
 <button class="cartbtn" id="cartbtn" aria-label="Ouvrir le panier">Panier <b id="cc">0</b></button></div></header>
 
 <div class="wrap">
@@ -243,7 +246,7 @@ footer{margin-top:4px;border-top:1px solid var(--line);background:var(--card);te
 </div>
 <footer>
   <div class="footer-main">
-    <div class="footer-brand"><a class="logo" href="#" aria-label="Mindo, accueil">Mindo<i></i></a><p>Une sélection de produits pour le quotidien, livrée partout en Tunisie.</p></div>
+    <div class="footer-brand"><span class="logo-group"><a class="logo" href="#" aria-label="Mindo, accueil">Mindo</a><a class="logo-dot-link" href="tableau.html" aria-label="Ouvrir le tableau Mindo"><i aria-hidden="true"></i></a></span><p>Une sélection de produits pour le quotidien, livrée partout en Tunisie.</p></div>
     <div class="footer-col"><strong>Liens utiles</strong><a href="#catalogue">Boutique</a><a href="#category-section">Catégories</a><a href="#engagements">Livraison et paiement</a></div>
     <div class="footer-col"><strong>Service client</strong><a href="contact.html">Page contact</a><a href="https://wa.me/21623844641" target="_blank" rel="noopener">Nous contacter sur WhatsApp</a><a href="https://www.facebook.com/mindo" target="_blank" rel="noopener">Facebook</a><a href="#how-title">Comment commander</a></div>
     <div class="footer-col"><strong>Votre commande</strong><span>Livraison : 7 DT</span><span>Paiement à la réception</span><span>Confirmation par WhatsApp</span></div>
