@@ -105,19 +105,90 @@ footer{text-align:center;color:var(--mute);font-size:.8rem;padding:0 24px 32px}
 @media (max-width:370px){.grid{grid-template-columns:1fr}.name{min-height:0}.hero h1{font-size:2.25rem}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
 .pic img,.item .e img{width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block}
+/* ShopTunisia-inspired storefront treatment. */
+:root{--bg:#f4f6fb;--card:#fff;--ink:#17243a;--mute:#68758a;--brand:#0874ce;--brand-ink:#fff;--sun:#ffc34d;--sun-ink:#30220a;--line:#e3e9f2;--glass:rgba(255,255,255,.95);--hero:#e8f1fc;--shadow:0 12px 32px rgba(23,36,58,.08)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101827;--card:#182337;--ink:#edf3ff;--mute:#a0aec4;--brand:#68b5ff;--brand-ink:#0c1d30;--line:#2c3b53;--glass:rgba(16,24,39,.95);--hero:#1c2b42;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#101827;--card:#182337;--ink:#edf3ff;--mute:#a0aec4;--brand:#68b5ff;--brand-ink:#0c1d30;--line:#2c3b53;--glass:rgba(16,24,39,.95);--hero:#1c2b42;color-scheme:dark}
+.announcement{background:#142b4d;color:#f5f8ff;padding:7px 16px;font-size:.75rem}
+.bar{gap:20px;min-height:68px}
+.logo{font-size:1.75rem}
+.navlink{color:var(--ink);font-size:.86rem}
+.category-nav{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;background:#142b4d;color:#fff;border:0;border-radius:9px;padding:10px 13px;font-weight:700;font-size:.81rem}
+.header-search{flex:0 1 330px;position:relative}
+.header-search::before{content:"⌕";position:absolute;left:13px;top:50%;transform:translateY(-56%);font-size:1.4rem;color:var(--mute);pointer-events:none}
+.header-search input{width:100%;height:40px;padding:8px 14px 8px 38px;border:1px solid var(--line);border-radius:11px;background:var(--bg);color:var(--ink);font:inherit;font-size:.81rem}
+.header-search input:focus{border-color:var(--brand);outline:3px solid color-mix(in srgb,var(--brand) 18%,transparent)}
+.hero{margin-top:13px;min-height:315px;padding:clamp(26px,4.5vw,54px);border-radius:16px;background:linear-gradient(112deg,#eef4fb 0%,#e6f0fc 56%,#c9def6 100%)}
+.hero::after{right:7%;top:-165px;width:390px;height:390px;background:#74a8df;opacity:.35}
+.hero h1{font-size:clamp(2.35rem,5vw,4.1rem);margin:12px 0}
+.hero h1 em{font-style:normal;color:var(--brand)}
+.eyebrow{letter-spacing:.07em}
+.cta{background:#142b4d;color:#fff;border-radius:10px;padding:12px 18px}
+.feat{background:rgba(255,255,255,.48);border:0;box-shadow:none;padding:0;transform:none}
+.feat .pic{height:clamp(180px,25vw,250px);background:rgba(255,255,255,.45);box-shadow:var(--shadow)}
+.perks{gap:10px;margin-top:12px}
+.perk{border-radius:12px;padding:11px 13px;box-shadow:none}
+.perkicon{border-radius:10px}
+.category-section{padding-top:23px;scroll-margin-top:100px}
+.category-rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(112px,1fr);gap:10px;overflow-x:auto;scrollbar-width:thin;padding:2px 2px 8px;min-width:0}
+.category-tile{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:7px;box-shadow:0 3px 12px rgba(23,36,58,.035)}
+.category-tile:hover,.category-tile.active{border-color:var(--brand);background:var(--card)}
+.category-tile .pic{aspect-ratio:1.12;border-radius:9px}
+.category-tile span{display:block;min-height:2.2em;line-height:1.15;font-size:.74rem}
+.category-tile small{white-space:nowrap;font-size:.66rem}
+.catalogue{padding-top:24px}
+.sectionhead{margin-bottom:13px}
+.sectionhead h2{font-size:clamp(1.55rem,2.7vw,2rem)}
+.tools{margin:12px 0 15px}
+.chips{padding-top:0}
+.grid{grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:13px;padding-bottom:20px}
+.card{border-radius:14px;padding:8px}
+.card:hover{transform:translateY(-3px)}
+.pic{aspect-ratio:1.18;border-radius:10px}
+.body{padding:10px 4px 3px;gap:5px}
+.name{font-size:.94rem;min-height:2.55em}
+.row{margin-top:8px;padding-top:8px}
+.add{height:38px;min-width:40px;border-radius:9px}
+.promo-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:8px 0 25px}
+.promo-card{position:relative;min-height:138px;overflow:hidden;display:flex;align-items:center;border:0;border-radius:13px;padding:19px;background:#173d79;color:#fff;text-align:left;cursor:pointer}
+.promo-card::after{content:"";position:absolute;inset:0 0 0 40%;background:linear-gradient(90deg,#173d79 0%,rgba(23,61,121,.25) 70%,transparent 100%),var(--promo-image) center/cover}
+.promo-card:nth-child(2){background:#f8e8eb;color:#17243a}
+.promo-card:nth-child(2)::after{background:linear-gradient(90deg,#f8e8eb 0%,rgba(248,232,235,.22) 70%,transparent 100%),var(--promo-image) center/cover}
+.promo-copy{position:relative;z-index:1;max-width:62%}
+.promo-copy strong{display:block;font:800 1.12rem/1.2 "Bricolage Grotesque","Figtree",sans-serif}
+.promo-copy small{display:block;margin:5px 0 10px;font-size:.76rem}
+.promo-copy span{display:inline-block;padding:6px 11px;background:var(--card);color:var(--ink);border-radius:999px;font-size:.72rem;font-weight:800}
+.how-section{padding:8px 0 34px}
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+.how-card{display:flex;align-items:flex-start;gap:11px;padding:14px;background:var(--card);border:1px solid var(--line);border-radius:12px}
+.how-number{display:grid;place-items:center;flex:none;width:30px;height:30px;border-radius:9px;background:var(--hero);color:var(--brand);font-weight:800}
+.how-card strong{display:block;font-size:.83rem}
+.how-card small{display:block;margin-top:3px;color:var(--mute);font-size:.74rem}
+footer{margin-top:4px;border-top:1px solid var(--line);background:var(--card);text-align:left;padding:0}
+.footer-main{max-width:1240px;margin:auto;padding:26px 24px 20px;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:22px}
+.footer-brand p{max-width:32ch;color:var(--mute);font-size:.78rem}
+.footer-col strong{display:block;margin:4px 0 8px;font-size:.82rem}
+.footer-col a{display:block;width:fit-content;margin:6px 0;color:var(--mute);text-decoration:none;font-size:.76rem}
+.footer-col a:hover{color:var(--brand)}
+.footer-col>span{display:block;margin:6px 0;color:var(--mute);font-size:.76rem}
+.footer-bottom{padding:11px 24px;background:#142b4d;color:#f5f8ff;font-size:.71rem}
+.footer-bottom div{max-width:1192px;margin:auto;display:flex;justify-content:space-between;gap:10px}
+@media(max-width:760px){.bar{min-height:60px;padding:8px 13px;gap:9px;display:grid;grid-template-columns:auto 1fr auto}.logo{font-size:1.6rem}.navlink,.category-nav{display:none}.header-search{grid-column:1/-1;grid-row:2;width:100%;margin-bottom:5px}.announcement{font-size:.69rem}.wrap{padding:0 13px}.hero{grid-template-columns:1fr;margin-top:11px;border-radius:14px;padding:23px 19px;gap:19px;min-height:0}.hero h1{font-size:clamp(2.2rem,9.5vw,3.2rem)}.hero p{font-size:.9rem}.feat .pic{height:185px}.perks{grid-template-columns:1fr;gap:7px;margin-top:10px}.perk{padding:8px 10px}.perkicon{width:33px;height:33px}.category-section{padding-top:19px}.category-rail{grid-auto-columns:105px;gap:8px}.catalogue{padding-top:17px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.card{padding:7px;border-radius:12px}.pic{aspect-ratio:1.05;border-radius:9px}.body{padding:9px 3px 2px}.name{font-size:.85rem;min-height:3.85em}.desc{font-size:.73rem}.price{font-size:1.1rem}.add{height:36px;min-width:36px;padding:0 9px}.promo-row{grid-template-columns:1fr;gap:9px;padding-bottom:20px}.promo-card{min-height:126px}.how-grid{grid-template-columns:1fr;gap:7px}.how-section{padding-bottom:24px}.footer-main{grid-template-columns:1fr 1fr;padding:22px 14px;gap:16px}.footer-brand{grid-column:1/-1}.footer-bottom div{flex-direction:column;text-align:center}}
+@media(max-width:370px){.grid{grid-template-columns:1fr}.name{min-height:0}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
 <div class="announcement">Livraison partout en Tunisie <span aria-hidden="true">·</span> Paiement à la réception</div>
-<header><div class="bar"><a class="logo" href="#" aria-label="Mindo, accueil">Mindo<i></i></a><a class="navlink" href="#catalogue">Boutique</a><a class="navlink" href="#engagements">Nos engagements</a><div class="grow"></div>
+<header><div class="bar"><a class="logo" href="#" aria-label="Mindo, accueil">Mindo<i></i></a><button class="category-nav" id="category-nav" type="button">☰ <span>Toutes les catégories</span>⌄</button><a class="navlink" href="#catalogue">Accueil</a><a class="navlink" href="#catalogue">Boutique</a><div class="searchbox header-search"><input type="search" id="q" placeholder="Rechercher un produit…" aria-label="Rechercher un produit"></div><div class="grow"></div>
 <button class="cartbtn" id="cartbtn" aria-label="Ouvrir le panier">Panier <b id="cc">0</b></button></div></header>
 
 <div class="wrap">
 <section class="hero">
   <div class="hero-copy">
     <span class="eyebrow">La sélection Mindo · Tunisie</span>
-    <h1>Le bon produit, livré chez vous en Tunisie.</h1>
-    <p>Maison, cuisine, beauté, gadgets et artisanat tunisien. Commandez en quelques clics et payez à la réception.</p>
+    <h1>Le bon produit,<br>au meilleur prix <em>en Tunisie.</em></h1>
+    <p>Des idées pour la maison, la cuisine, la beauté et le quotidien. Commandez simplement et payez à la réception.</p>
     <a class="cta" href="#catalogue">Voir les produits</a>
   </div>
   <div class="feat" id="feat"></div>
@@ -128,16 +199,40 @@ footer{text-align:center;color:var(--mute);font-size:.8rem;padding:0 24px 32px}
   <div class="perk"><span class="perkicon" aria-hidden="true">💬</span><span>Confirmation WhatsApp<small>Vérifiez votre commande avant envoi</small></span></div>
 </div>
 
+<section class="category-section" id="category-section" aria-labelledby="category-title">
+  <div class="sectionhead"><div><span class="eyebrow">Explorer</span><h2 id="category-title">Nos catégories</h2></div><a class="navlink" href="#catalogue">Voir les produits →</a></div>
+  <div class="category-rail" id="category-rail"></div>
+</section>
+
 <section class="catalogue" id="catalogue" aria-labelledby="catalogue-title">
-<div class="sectionhead"><div><span class="eyebrow">À découvrir</span><h2 id="catalogue-title">La boutique</h2></div><span id="product-count"></span></div>
+<div class="sectionhead"><div><span class="eyebrow">À découvrir</span><h2 id="catalogue-title">Produits de la boutique</h2></div><span id="product-count"></span></div>
 <div class="tools">
-  <div class="searchbox"><input type="search" id="q" placeholder="Rechercher un produit" aria-label="Rechercher un produit"></div>
   <div class="chips" id="chips"></div>
 </div>
 <main class="grid" id="grid"></main>
 </section>
+<section class="promo-row" aria-label="Nos sélections">
+  <button class="promo-card" id="promo-home" type="button"><span class="promo-copy"><strong>Maison &amp; cuisine</strong><small>Des idées pratiques au quotidien</small><span>Découvrir →</span></span></button>
+  <button class="promo-card" id="promo-local" type="button"><span class="promo-copy"><strong>Artisanat tunisien</strong><small>Des idées cadeaux aux accents locaux</small><span>Découvrir →</span></span></button>
+</section>
+<section class="how-section" aria-labelledby="how-title">
+  <div class="sectionhead"><div><span class="eyebrow">Simple et pratique</span><h2 id="how-title">Comment commander</h2></div></div>
+  <div class="how-grid">
+    <div class="how-card"><span class="how-number">1</span><span><strong>Choisissez vos produits</strong><small>Ajoutez vos articles au panier.</small></span></div>
+    <div class="how-card"><span class="how-number">2</span><span><strong>Indiquez vos coordonnées</strong><small>Ajoutez téléphone et adresse de livraison.</small></span></div>
+    <div class="how-card"><span class="how-number">3</span><span><strong>Vérifiez sur WhatsApp</strong><small>Relisez la commande puis envoyez-la pour confirmation.</small></span></div>
+  </div>
+</section>
 </div>
-<footer>© Mindo – Prix en dinars tunisiens (DT). Photos d’illustration ; vérifiez les photos, prix et disponibilités réels avant la mise en vente.</footer>
+<footer>
+  <div class="footer-main">
+    <div class="footer-brand"><a class="logo" href="#" aria-label="Mindo, accueil">Mindo<i></i></a><p>Une sélection de produits pour le quotidien, livrée partout en Tunisie.</p></div>
+    <div class="footer-col"><strong>Liens utiles</strong><a href="#catalogue">Boutique</a><a href="#category-section">Catégories</a><a href="#engagements">Livraison et paiement</a></div>
+    <div class="footer-col"><strong>Service client</strong><a href="https://wa.me/21623844641" target="_blank" rel="noopener">Nous contacter sur WhatsApp</a><a href="#how-title">Comment commander</a></div>
+    <div class="footer-col"><strong>Votre commande</strong><span>Livraison : 7 DT</span><span>Paiement à la réception</span><span>Confirmation par WhatsApp</span></div>
+  </div>
+  <div class="footer-bottom"><div><span>© Mindo – Prix en dinars tunisiens (DT).</span><span>Photos d’illustration ; visuels non contractuels.</span></div></div>
+</footer>
 
 <button class="fab" id="fab"><span id="fabn"></span><span id="fabt"></span></button>
 <div class="scrim" id="scrim"></div>
@@ -195,6 +290,18 @@ var P = [
 ["Poterie artisanale / ustensiles en bois d’olivier","Artisanat local","🏺",45,"Pièces artisanales tunisiennes, idéales en cadeau."],
 ["Coffret beauté tunisien (eau de rose, huile de figue de barbarie, henné)","Artisanat / Cadeau","🌹",35,"Eau de rose, huile de figue de barbarie et henné."]
 ];
+var G = [
+  {title:"Électronique",featured:9,products:[9,10]},
+  {title:"Maison & déco",featured:2,products:[2,3,4,11]},
+  {title:"Cuisine",featured:5,products:[5,6,7]},
+  {title:"Beauté",featured:12,products:[12,13,19]},
+  {title:"Mode",featured:15,products:[15]},
+  {title:"Auto",featured:8,products:[8]},
+  {title:"Animaux",featured:16,products:[16]},
+  {title:"Bébé",featured:17,products:[17]},
+  {title:"Artisanat",featured:18,products:[18,19]},
+  {title:"Hiver",featured:0,products:[0,1,2,3]}
+];
 // Photos d’illustration Unsplash; remplacez-les par vos photos produits avant la mise en vente.
 var IMG=[
   "https://images.unsplash.com/photo-1610399809302-f1dd7ec33187?auto=format&fit=crop&w=800&q=80",
@@ -206,7 +313,7 @@ var IMG=[
   "https://images.unsplash.com/photo-1786413568427-d65dec4e215b?auto=format&fit=crop&w=800&q=80",
   "https://images.unsplash.com/photo-1778909432013-e584c8ea17d1?auto=format&fit=crop&w=800&q=80",
   "https://images.unsplash.com/photo-1764347923709-fc48487f2486?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=800&q=80",
   "https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?auto=format&fit=crop&w=800&q=80",
   "https://images.unsplash.com/photo-1743435009576-1beabc1043bd?auto=format&fit=crop&w=800&q=80",
   "https://images.unsplash.com/photo-1788079962459-dceba255d033?auto=format&fit=crop&w=800&q=80",
@@ -220,15 +327,19 @@ var IMG=[
 ];
 function pic(i){var u=IMG[i];if(!u)return P[i][2];return '<img src="'+u+'" alt="Photo d’illustration : '+P[i][0]+'" loading="lazy" onerror="this.replaceWith(document.createTextNode(\''+P[i][2]+'\'))">'}
 var H={"Hiver / Gadget":210,"Hiver / Cadeau":24,"Hiver / Maison":205,"Maison":275,"Cuisine":28,"Cuisine / Gadget":35,"Auto / Accessoire":190,"Électronique":238,"Beauté":330,"Homme / Soins":160,"Mode":48,"Animaux":95,"Bébé":8,"Artisanat local":18,"Maison / Déco":265,"Artisanat / Cadeau":12};
-var cat="Tous",cart={},$=function(i){return document.getElementById(i)};
+var cat="Tous",categoryGroup=null,cart={},$=function(i){return document.getElementById(i)};
 function cats(){var s=["Tous"];P.forEach(function(p){if(s.indexOf(p[1])<0)s.push(p[1])});return s}
-function chips(){$("chips").innerHTML="";cats().forEach(function(c){var b=document.createElement("button");b.className="chip"+(c===cat?" on":"");b.textContent=c;b.onclick=function(){cat=c;chips();render()};$("chips").appendChild(b)})}
+function chips(){$("chips").innerHTML="";cats().forEach(function(c){var b=document.createElement("button");b.className="chip"+(!categoryGroup&&c===cat?" on":"");b.textContent=c;b.onclick=function(){cat=c;categoryGroup=null;chips();categoryTiles();render()};$("chips").appendChild(b)})}
+function categoryTiles(){$("category-rail").innerHTML="";G.forEach(function(g){var b=document.createElement("button");b.type="button";b.className="category-tile"+(categoryGroup===g?" active":"");b.innerHTML='<div class="pic">'+pic(g.featured)+'</div><span>'+g.title+'</span><small>'+g.products.length+' produits</small>';b.onclick=function(){selectGroup(g)};$("category-rail").appendChild(b)})}
+function selectGroup(g){categoryGroup=g;cat="Tous";chips();categoryTiles();render();$("catalogue").scrollIntoView({behavior:"smooth",block:"start"})}
+function showAllProducts(indices){var g=G.filter(function(group){return group.products.some(function(i){return indices.indexOf(i)>=0})});if(g.length===1){selectGroup(g[0]);return}categoryGroup={title:"Sélection",products:indices};cat="Tous";chips();categoryTiles();render();$("catalogue").scrollIntoView({behavior:"smooth",block:"start"})}
 function card(p,i){return '<div class="pic" style="--h:'+H[p[1]]+'">'+pic(i)+'</div><div class="body"><div class="cat">'+p[1]+'</div><div class="name">'+p[0]+'</div><div class="desc">'+p[4]+'</div><div class="row"><span class="price">'+p[3]+'<small>DT</small></span><button class="add" data-i="'+i+'" aria-label="Ajouter '+p[0]+'">+</button></div></div>'}
 function bind(root){Array.prototype.forEach.call(root.querySelectorAll(".add"),function(b){b.onclick=function(){add(+b.dataset.i,1);b.classList.add("ok");b.textContent="✓";setTimeout(function(){b.classList.remove("ok");b.textContent="+"},900)}})}
 function render(){
   var q=$("q").value.trim().toLowerCase(),g=$("grid");g.innerHTML="";var n=0;
   P.forEach(function(p,i){
-    if(cat!=="Tous"&&p[1]!==cat)return;
+    if(categoryGroup&&categoryGroup.products.indexOf(i)<0)return;
+    if(!categoryGroup&&cat!=="Tous"&&p[1]!==cat)return;
     if(q&&(p[0]+" "+p[4]).toLowerCase().indexOf(q)<0)return;
     n++;var d=document.createElement("div");d.className="card";d.innerHTML=card(p,i);g.appendChild(d)});
   $("product-count").textContent=n+(n>1?" produits":" produit");
@@ -249,6 +360,11 @@ function draw(){
 }
 function open_(o){$("sheet").classList.toggle("open",o);$("scrim").classList.toggle("open",o);$("sheet").setAttribute("aria-hidden",String(!o));$("sheet").inert=!o;if(o)$("customer-name").focus();else $("cartbtn").focus()}
 $("q").oninput=render;
+$("category-nav").onclick=function(){$("category-section").scrollIntoView({behavior:"smooth"})};
+$("promo-home").style.setProperty("--promo-image",'url("'+IMG[5]+'")');
+$("promo-local").style.setProperty("--promo-image",'url("'+IMG[18]+'")');
+$("promo-home").onclick=function(){showAllProducts([2,3,4,5,6,7,11])};
+$("promo-local").onclick=function(){showAllProducts([18,19])};
 $("cartbtn").onclick=$("fab").onclick=function(){open_(true)};
 $("close").onclick=$("scrim").onclick=function(){open_(false)};
 $("customer-phone").oninput=function(){var valid=/^[0-9+() -]+$/.test(this.value)&&this.value.replace(/\D/g,"").length>=8;this.setCustomValidity(valid?"":"Saisissez un numéro valide avec au moins 8 chiffres.")};
@@ -270,8 +386,8 @@ document.addEventListener("keydown",function(e){
   if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
   else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
 });
-$("feat").innerHTML=card(P[0],0);bind($("feat"));
-chips();render();draw();
+$("feat").innerHTML=card(P[9],9);bind($("feat"));
+chips();categoryTiles();render();draw();
 </script>
 </body>
 </html>
