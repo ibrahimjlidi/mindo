@@ -4,7 +4,7 @@ Boutique en ligne statique pour Mindo, avec catalogue de produits, panier et com
 
 ## Utilisation
 
-Ouvrez `index.html` dans un navigateur. Les photos et les polices nécessitent une connexion Internet.
+Ouvrez `index.html` dans un navigateur. La page `contact.html` donne accès à WhatsApp et à Facebook. Les photos et les polices nécessitent une connexion Internet.
 
 ## Déploiement sur Vercel
 

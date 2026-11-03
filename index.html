@@ -176,20 +176,37 @@ footer{margin-top:4px;border-top:1px solid var(--line);background:var(--card);te
 @media(max-width:760px){.bar{min-height:60px;padding:8px 13px;gap:9px;display:grid;grid-template-columns:auto 1fr auto}.logo{font-size:1.6rem}.navlink,.category-nav{display:none}.header-search{grid-column:1/-1;grid-row:2;width:100%;margin-bottom:5px}.announcement{font-size:.69rem}.wrap{padding:0 13px}.hero{grid-template-columns:1fr;margin-top:11px;border-radius:14px;padding:23px 19px;gap:19px;min-height:0}.hero h1{font-size:clamp(2.2rem,9.5vw,3.2rem)}.hero p{font-size:.9rem}.feat .pic{height:185px}.perks{grid-template-columns:1fr;gap:7px;margin-top:10px}.perk{padding:8px 10px}.perkicon{width:33px;height:33px}.category-section{padding-top:19px}.category-rail{grid-auto-columns:105px;gap:8px}.catalogue{padding-top:17px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.card{padding:7px;border-radius:12px}.pic{aspect-ratio:1.05;border-radius:9px}.body{padding:9px 3px 2px}.name{font-size:.85rem;min-height:3.85em}.desc{font-size:.73rem}.price{font-size:1.1rem}.add{height:36px;min-width:36px;padding:0 9px}.promo-row{grid-template-columns:1fr;gap:9px;padding-bottom:20px}.promo-card{min-height:126px}.how-grid{grid-template-columns:1fr;gap:7px}.how-section{padding-bottom:24px}.footer-main{grid-template-columns:1fr 1fr;padding:22px 14px;gap:16px}.footer-brand{grid-column:1/-1}.footer-bottom div{flex-direction:column;text-align:center}}
 @media(max-width:370px){.grid{grid-template-columns:1fr}.name{min-height:0}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+.hero{min-height:330px}
+.hero-copy,.feat{transition:opacity .22s ease,transform .22s ease}
+.hero.is-changing .hero-copy,.hero.is-changing .feat{opacity:0;transform:translateY(8px)}
+.hero-controls{display:flex;align-items:center;gap:8px;margin-top:22px}
+.hero-control{width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;background:var(--card);color:var(--ink);font-size:1rem}
+.hero-dots{display:flex;align-items:center;gap:6px;margin:0 4px}
+.hero-dot{width:8px;height:8px;padding:0;border:0;border-radius:99px;background:var(--mute);opacity:.45}
+.hero-dot.active{width:22px;background:var(--brand);opacity:1}
+.hero-control:hover,.hero-dot:hover{border-color:var(--brand)}
+.hero .feat .pic{height:clamp(180px,25vw,250px)}
+@media(max-width:760px){.hero{min-height:0}.hero-controls{margin-top:17px}.hero .feat .pic{height:185px}}
 </style>
 </head>
 <body>
 <div class="announcement">Livraison partout en Tunisie <span aria-hidden="true">·</span> Paiement à la réception</div>
-<header><div class="bar"><a class="logo" href="#" aria-label="Mindo, accueil">Mindo<i></i></a><button class="category-nav" id="category-nav" type="button">☰ <span>Toutes les catégories</span>⌄</button><a class="navlink" href="#catalogue">Accueil</a><a class="navlink" href="#catalogue">Boutique</a><div class="searchbox header-search"><input type="search" id="q" placeholder="Rechercher un produit…" aria-label="Rechercher un produit"></div><div class="grow"></div>
+<header><div class="bar"><a class="logo" href="#" aria-label="Mindo, accueil">Mindo<i></i></a><button class="category-nav" id="category-nav" type="button">☰ <span>Toutes les catégories</span>⌄</button><a class="navlink" href="#catalogue">Accueil</a><a class="navlink" href="#catalogue">Boutique</a><a class="navlink" href="contact.html">Contact</a><div class="searchbox header-search"><input type="search" id="q" placeholder="Rechercher un produit…" aria-label="Rechercher un produit"></div><div class="grow"></div>
 <button class="cartbtn" id="cartbtn" aria-label="Ouvrir le panier">Panier <b id="cc">0</b></button></div></header>
 
 <div class="wrap">
-<section class="hero">
+<section class="hero" id="hero" aria-roledescription="carrousel" aria-label="Sélections à découvrir">
   <div class="hero-copy">
-    <span class="eyebrow">La sélection Mindo · Tunisie</span>
-    <h1>Le bon produit,<br>au meilleur prix <em>en Tunisie.</em></h1>
-    <p>Des idées pour la maison, la cuisine, la beauté et le quotidien. Commandez simplement et payez à la réception.</p>
-    <a class="cta" href="#catalogue">Voir les produits</a>
+    <span class="eyebrow" id="hero-eyebrow"></span>
+    <h1 id="hero-title"></h1>
+    <p id="hero-description"></p>
+    <button class="cta" id="hero-cta" type="button"></button>
+    <div class="hero-controls" aria-label="Commandes du carrousel">
+      <button class="hero-control" id="hero-prev" type="button" aria-label="Bannière précédente">‹</button>
+      <div class="hero-dots" id="hero-dots" aria-label="Choisir une bannière"></div>
+      <button class="hero-control" id="hero-next" type="button" aria-label="Bannière suivante">›</button>
+      <button class="hero-control" id="hero-pause" type="button" aria-label="Mettre en pause" aria-pressed="false">Ⅱ</button>
+    </div>
   </div>
   <div class="feat" id="feat"></div>
 </section>
@@ -228,7 +245,7 @@ footer{margin-top:4px;border-top:1px solid var(--line);background:var(--card);te
   <div class="footer-main">
     <div class="footer-brand"><a class="logo" href="#" aria-label="Mindo, accueil">Mindo<i></i></a><p>Une sélection de produits pour le quotidien, livrée partout en Tunisie.</p></div>
     <div class="footer-col"><strong>Liens utiles</strong><a href="#catalogue">Boutique</a><a href="#category-section">Catégories</a><a href="#engagements">Livraison et paiement</a></div>
-    <div class="footer-col"><strong>Service client</strong><a href="https://wa.me/21623844641" target="_blank" rel="noopener">Nous contacter sur WhatsApp</a><a href="#how-title">Comment commander</a></div>
+    <div class="footer-col"><strong>Service client</strong><a href="contact.html">Page contact</a><a href="https://wa.me/21623844641" target="_blank" rel="noopener">Nous contacter sur WhatsApp</a><a href="https://www.facebook.com/mindo" target="_blank" rel="noopener">Facebook</a><a href="#how-title">Comment commander</a></div>
     <div class="footer-col"><strong>Votre commande</strong><span>Livraison : 7 DT</span><span>Paiement à la réception</span><span>Confirmation par WhatsApp</span></div>
   </div>
   <div class="footer-bottom"><div><span>© Mindo – Prix en dinars tunisiens (DT).</span><span>Photos d’illustration ; visuels non contractuels.</span></div></div>
@@ -258,7 +275,7 @@ footer{margin-top:4px;border-top:1px solid var(--line);background:var(--card);te
     <label for="customer-postal-code">Code postal
       <input id="customer-postal-code" name="postalCode" autocomplete="postal-code" inputmode="numeric" required maxlength="10">
     </label>
-    <p class="privacy">En cliquant, WhatsApp s’ouvrira avec votre commande et vos coordonnées préremplies pour <strong>+216 23 844 641</strong>. Rien n’est envoyé automatiquement : vérifiez le message puis appuyez sur Envoyer dans WhatsApp.</p>
+    <p class="privacy">En cliquant, WhatsApp s’ouvrira avec votre commande et vos coordonnées préremplies pour la boutique. Rien n’est envoyé automatiquement : vérifiez le message puis appuyez sur Envoyer dans WhatsApp.</p>
     <button class="order" id="order" type="submit">Continuer sur WhatsApp</button>
   </form>
 </aside>
@@ -302,6 +319,11 @@ var G = [
   {title:"Artisanat",featured:18,products:[18,19]},
   {title:"Hiver",featured:0,products:[0,1,2,3]}
 ];
+var HERO_SLIDES = [
+  {eyebrow:"Les coups de cœur Mindo",title:"Des essentiels qui font la différence.",description:"Découvrez notre sélection électronique et trouvez votre prochain indispensable.",button:"Voir l’électronique",group:0,featured:9},
+  {eyebrow:"Pour la maison",title:"Simplifiez vos gestes du quotidien.",description:"Des idées pratiques pour la cuisine et la maison, à découvrir au même endroit.",button:"Explorer la cuisine",group:2,featured:7},
+  {eyebrow:"Fierté tunisienne",title:"Une touche de Tunisie à offrir.",description:"Découvrez nos produits d’artisanat local et nos idées cadeaux.",button:"Découvrir l’artisanat",group:8,featured:18}
+];
 // Photos d’illustration Unsplash; remplacez-les par vos photos produits avant la mise en vente.
 var IMG=[
   "https://images.unsplash.com/photo-1610399809302-f1dd7ec33187?auto=format&fit=crop&w=800&q=80",
@@ -328,11 +350,37 @@ var IMG=[
 function pic(i){var u=IMG[i];if(!u)return P[i][2];return '<img src="'+u+'" alt="Photo d’illustration : '+P[i][0]+'" loading="lazy" onerror="this.replaceWith(document.createTextNode(\''+P[i][2]+'\'))">'}
 var H={"Hiver / Gadget":210,"Hiver / Cadeau":24,"Hiver / Maison":205,"Maison":275,"Cuisine":28,"Cuisine / Gadget":35,"Auto / Accessoire":190,"Électronique":238,"Beauté":330,"Homme / Soins":160,"Mode":48,"Animaux":95,"Bébé":8,"Artisanat local":18,"Maison / Déco":265,"Artisanat / Cadeau":12};
 var cat="Tous",categoryGroup=null,cart={},$=function(i){return document.getElementById(i)};
+var heroIndex=0,heroTimer=null,heroTransition=null,heroPaused=false,heroHovered=false,heroFocused=false;
 function cats(){var s=["Tous"];P.forEach(function(p){if(s.indexOf(p[1])<0)s.push(p[1])});return s}
 function chips(){$("chips").innerHTML="";cats().forEach(function(c){var b=document.createElement("button");b.className="chip"+(!categoryGroup&&c===cat?" on":"");b.textContent=c;b.onclick=function(){cat=c;categoryGroup=null;chips();categoryTiles();render()};$("chips").appendChild(b)})}
 function categoryTiles(){$("category-rail").innerHTML="";G.forEach(function(g){var b=document.createElement("button");b.type="button";b.className="category-tile"+(categoryGroup===g?" active":"");b.innerHTML='<div class="pic">'+pic(g.featured)+'</div><span>'+g.title+'</span><small>'+g.products.length+' produits</small>';b.onclick=function(){selectGroup(g)};$("category-rail").appendChild(b)})}
 function selectGroup(g){categoryGroup=g;cat="Tous";chips();categoryTiles();render();$("catalogue").scrollIntoView({behavior:"smooth",block:"start"})}
 function showAllProducts(indices){var g=G.filter(function(group){return group.products.some(function(i){return indices.indexOf(i)>=0})});if(g.length===1){selectGroup(g[0]);return}categoryGroup={title:"Sélection",products:indices};cat="Tous";chips();categoryTiles();render();$("catalogue").scrollIntoView({behavior:"smooth",block:"start"})}
+function setHeroSlide(index){
+  heroIndex=(index+HERO_SLIDES.length)%HERO_SLIDES.length;
+  var slide=HERO_SLIDES[heroIndex],hero=$("hero");
+  hero.classList.add("is-changing");
+  if(heroTransition)clearTimeout(heroTransition);
+  heroTransition=setTimeout(function(){
+    $("hero-eyebrow").textContent=slide.eyebrow;
+    $("hero-title").textContent=slide.title;
+    $("hero-description").textContent=slide.description;
+    $("hero-cta").textContent=slide.button;
+    $("hero-cta").setAttribute("aria-label",slide.button);
+    $("feat").innerHTML=card(P[slide.featured],slide.featured);bind($("feat"));
+    Array.prototype.forEach.call($("hero-dots").children,function(dot,i){
+      dot.classList.toggle("active",i===heroIndex);
+      dot.setAttribute("aria-pressed",String(i===heroIndex));
+    });
+    hero.classList.remove("is-changing");
+  },180);
+}
+function stopHeroTimer(){if(heroTimer){clearInterval(heroTimer);heroTimer=null}}
+function startHeroTimer(){
+  stopHeroTimer();
+  if(heroPaused||heroHovered||heroFocused||document.hidden||window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  heroTimer=setInterval(function(){setHeroSlide(heroIndex+1)},2000);
+}
 function card(p,i){return '<div class="pic" style="--h:'+H[p[1]]+'">'+pic(i)+'</div><div class="body"><div class="cat">'+p[1]+'</div><div class="name">'+p[0]+'</div><div class="desc">'+p[4]+'</div><div class="row"><span class="price">'+p[3]+'<small>DT</small></span><button class="add" data-i="'+i+'" aria-label="Ajouter '+p[0]+'">+</button></div></div>'}
 function bind(root){Array.prototype.forEach.call(root.querySelectorAll(".add"),function(b){b.onclick=function(){add(+b.dataset.i,1);b.classList.add("ok");b.textContent="✓";setTimeout(function(){b.classList.remove("ok");b.textContent="+"},900)}})}
 function render(){
@@ -360,6 +408,25 @@ function draw(){
 }
 function open_(o){$("sheet").classList.toggle("open",o);$("scrim").classList.toggle("open",o);$("sheet").setAttribute("aria-hidden",String(!o));$("sheet").inert=!o;if(o)$("customer-name").focus();else $("cartbtn").focus()}
 $("q").oninput=render;
+$("hero-prev").onclick=function(){setHeroSlide(heroIndex-1)};
+$("hero-next").onclick=function(){setHeroSlide(heroIndex+1)};
+$("hero-dots").onclick=function(e){
+  var button=e.target.closest("button[data-slide]");
+  if(button)setHeroSlide(+button.dataset.slide);
+};
+$("hero-cta").onclick=function(){selectGroup(G[HERO_SLIDES[heroIndex].group])};
+$("hero-pause").onclick=function(){
+  heroPaused=!heroPaused;
+  this.setAttribute("aria-pressed",String(heroPaused));
+  this.setAttribute("aria-label",heroPaused?"Reprendre le carrousel":"Mettre en pause");
+  this.textContent=heroPaused?"▶":"Ⅱ";
+  startHeroTimer();
+};
+$("hero").addEventListener("mouseenter",function(){heroHovered=true;stopHeroTimer()});
+$("hero").addEventListener("mouseleave",function(){heroHovered=false;startHeroTimer()});
+$("hero").addEventListener("focusin",function(){heroFocused=true;stopHeroTimer()});
+$("hero").addEventListener("focusout",function(e){if(!this.contains(e.relatedTarget)){heroFocused=false;startHeroTimer()}});
+document.addEventListener("visibilitychange",startHeroTimer);
 $("category-nav").onclick=function(){$("category-section").scrollIntoView({behavior:"smooth"})};
 $("promo-home").style.setProperty("--promo-image",'url("'+IMG[5]+'")');
 $("promo-local").style.setProperty("--promo-image",'url("'+IMG[18]+'")');
@@ -386,8 +453,9 @@ document.addEventListener("keydown",function(e){
   if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
   else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
 });
-$("feat").innerHTML=card(P[9],9);bind($("feat"));
-chips();categoryTiles();render();draw();
+$("hero-dots").innerHTML=HERO_SLIDES.map(function(_,i){return '<button class="hero-dot" type="button" data-slide="'+i+'" aria-label="Afficher la bannière '+(i+1)+'" aria-pressed="false"></button>'}).join("");
+setHeroSlide(0);
+chips();categoryTiles();render();draw();startHeroTimer();
 </script>
 </body>
 </html>
